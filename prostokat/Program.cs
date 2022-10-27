@@ -30,8 +30,8 @@ namespace PodstawowaSkladniaProstokąta
         public void WyswietlCoWiesz()
         {
             Console.WriteLine("Długość: {0}", b);
-            Console.WriteLine("szerokosc: ", a);
-            Console.WriteLine("Pole:", P());
+            Console.WriteLine("szerokosc: {0}", a);
+            Console.WriteLine("Pole: {0}", P());
         }
     }
 }
