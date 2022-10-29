@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PodstawowaSkladniaProstokąta
+namespace PodstawowaSkladniaProstokątay
 {
     class Program
     {
