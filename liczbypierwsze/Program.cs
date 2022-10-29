@@ -6,19 +6,27 @@ namespace Sprawdzarka
     {
         static void Main(string[] args)
         {
-            int liczba;
             int zmienna;
+
             Console.WriteLine("Wprowadź liczbe, a odpowiem czy jest parzysta");
-liczba = Convert.ToInt32(Console.ReadLine());
-zmienna = liczba%2;
-if (zmienna == 0 )
-    {Console.WriteLine ("To jest parzysta");
-    }
-    else
-    {
-        Console.WriteLine ("to jest nieparzysta");
-        }
-    Console.ReadKey();
+            var czySukces = int.TryParse(Console.ReadLine(), out var liczba);
+
+            if (czySukces)
+            {
+                zmienna = liczba % 2;
+                if (zmienna == 0)
+                {
+                    Console.WriteLine("To jest parzysta");
+                }
+                else
+                {
+                    Console.WriteLine("to jest nieparzysta");
+                }
+            }
+            else
+                Console.WriteLine("daj spokój");
+
+            Console.ReadKey();
 
         }
     }
