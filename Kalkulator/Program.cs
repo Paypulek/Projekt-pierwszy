@@ -50,7 +50,7 @@ namespace Kalkulator;
                                 {
                                     if (liczba1 == 0)
                                     {
-                                        Console.WriteLine("Za te zero to też mi sie już nie chce działać nara");
+                                        Console.WriteLine("nie przez zero");
                                         return 0;
                                     }
 
