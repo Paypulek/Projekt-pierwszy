@@ -1,37 +1,36 @@
 ﻿using System;
-namespace PodstawowaSkladniaProstokątay
+namespace ModyfikatoryDostepu
 {
     class Program
     {
+        // Tutaj dojdzie do wykonania kodu naszej klasy
         static void Main(string[] args)
         {
-            Prostokat r = new Prostokat(); // pobaw sie i sprawdz co robi new
-            r.AkceptujDetale();
-            r.WyswietlCoWiesz();
-            Console.ReadKey(); // poczekam az nacisniesz guzik
+            Prostokat pr = new Prostokat();
+            pr.wysokosc = 4.5;
+            pr.szerokosc = 3.5;
+            pr.WyswietlInformacje();
+            Console.ReadKey();
+            // Wykonanie programu
+            //Szerokosc: 3.5
+            //Wysokosc: 4.5
+            //Powierzchnia: 15.75
         }
     }
-    //definicja klasyt prostokata
     class Prostokat
     {
-        //tworzymy zmienne
-        double a;
-        double b;
-        public void AkceptujDetale()
+        // pola klasy
+        public double szerokosc;
+        public double wysokosc;
+        public double ObliczPowierzchnie()
         {
-            a = 20;
-            b = 45;
+            return szerokosc * wysokosc;
         }
-        //liczenie powierzchnie
-        public double P()
-        {return a*b;
-        }
-        //Wyświetlenie danych
-        public void WyswietlCoWiesz()
+        public void WyswietlInformacje()
         {
-            Console.WriteLine("Długość: {0}", b);
-            Console.WriteLine("szerokosc: {0}", a);
-            Console.WriteLine("Pole: {0}", P());
+            Console.WriteLine("Szerokość: {0}", szerokosc);
+            Console.WriteLine("Wysokość: {0}", wysokosc);
+            Console.WriteLine("Powierzchnia: {0}", ObliczPowierzchnie());
         }
     }
 }
