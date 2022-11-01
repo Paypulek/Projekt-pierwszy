@@ -1,7 +1,5 @@
-﻿var liczby = new List<int> {0,3,4,5,6,7,2,1,3,4};
-foreach (int wartosc in liczby)
+﻿int[] numbers = { 4, 5, 6, 1, 2, 3, -2, -1, 0 };
+foreach (int i in numbers)
 {
-   int wartosc1=1+wartosc;
-    Console.WriteLine($"wartosc {wartosc1} {wartosc}");
-
+    System.Console.Write("{0} ", i);
 }
