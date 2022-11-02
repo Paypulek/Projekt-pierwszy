@@ -17,7 +17,7 @@ namespace Kalkulator
                 var znak = klk.WprowadźOperator(); ;
                 var liczba2 = klk.WprowadźLiczbe();
 
-                var liczba1= klk.Oblicz(liczba1, znak, liczba2);
+                    liczba1= klk.Oblicz(liczba1, znak, liczba2);
                 Console.WriteLine("wynik to {0}", liczba1);
             }
         }
