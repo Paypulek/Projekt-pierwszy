@@ -1,7 +1,6 @@
 namespace Koszyk;
-class Produkt : InfoOProdukcie
+  class Produkt : InfoOProdukcie
 {
-    static int KosztProduktów;
     int cenaProduktu;
     public string Nazwa="produkt";
 
@@ -22,10 +21,18 @@ class Produkt : InfoOProdukcie
         ilość = a;
     }
 
+    public Produkt()
+    {
+        
+    }
+     ~Produkt()
+        {
+            
+        }
 
     public void OdczytajNazwe()
     {
-        Console.WriteLine(Nazwa, cenaProduktu);
+        Console.WriteLine( Nazwa + " - " + cenaProduktu +" zł");
     }
 
     public int Cena()
