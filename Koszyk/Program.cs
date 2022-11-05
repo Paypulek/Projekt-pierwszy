@@ -6,6 +6,7 @@ class Program
     static void Main(string[] args)
     {
         Magazyn Hala = new Magazyn();
+        Zakupy Torba = new Zakupy();
         List<Produkt> ListaProduktów = new List<Produkt>();
         ListaProduktów.Add(new Produkt(20, "Książka", 1));
         Hala.Dodaj(0, 10);
@@ -17,28 +18,39 @@ class Program
         Hala.Dodaj(3, 17);
         ListaProduktów.Add(new Produkt(100, "Łuk", 5));
         Hala.Dodaj(4, 18);
-
         
 
-        Menu(ListaProduktów, Hala);
+        Menu(ListaProduktów, Hala, Torba);
 
     }
 
-    static void Menu(List<Produkt> Lista, Magazyn Hala)
-    {
-        Console.WriteLine("Dzień dobry witam w sklepie oto lista produktów");
+    static void Menu(List<Produkt> Lista, Magazyn Hala, Zakupy Torba)
+    {   
+
+
+        Console.WriteLine("Dzień dobry witam w sklepie oto lista produktów (ID produktu jest w kwadratowych nawiasach)");
         foreach (Produkt item in Lista)
         {
             item.OdczytajNazwe();
         }
+        
         Console.WriteLine("Na Magazynie mamy");
         foreach (Produkt item in Lista)
         {
             item.StanMagazynu(Hala);
         }
 
+        Console.WriteLine("W koszyku mamy");
+        foreach (Produkt item in Lista)
+        {
+            item.StanZakupów(Torba);
+        }
+
+       
 
 
+
+        
     }
 }
 

@@ -29,6 +29,11 @@ class Produkt
         Console.WriteLine("["+ Hala.StanMagazynowy[(ID-1)] + "]" + nazwa);
     }
 
+    public void StanZakupów(Zakupy Torba)
+    {
+        Console.WriteLine("["+ Torba.Lista[(ID-1)] + "]" + nazwa);
+    }
+
 }
 
 
