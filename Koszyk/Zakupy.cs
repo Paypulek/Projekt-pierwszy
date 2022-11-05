@@ -1,0 +1,5 @@
+namespace Koszyk;
+  class Zakupy 
+  {
+
+  }

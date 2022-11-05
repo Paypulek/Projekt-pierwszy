@@ -1,54 +1,36 @@
 namespace Koszyk;
-  class Produkt : InfoOProdukcie
+class Produkt
 {
-    int cenaProduktu;
-    public string Nazwa="produkt";
 
-    int ilość;
 
-    public void Nazwij(string Tytuł)
+
+    int ID;
+     int cena;
+     string nazwa;
+    public Produkt(int Cena, string Nazwa, int iD)
     {
-        Nazwa = Tytuł;
+        cena = Cena;
+        nazwa = Nazwa;
+        ID = iD;
+
     }
 
-    public void Wyceń(int Cena)
-    {
-        cenaProduktu = Cena;
-    }
 
-    public void Ile(int a)
-    {
-        ilość = a;
-    }
 
-    public Produkt()
-    {
-        
-    }
-     ~Produkt()
-        {
-            
-        }
+
 
     public void OdczytajNazwe()
     {
-        Console.WriteLine( Nazwa + " - " + cenaProduktu +" zł");
+        Console.WriteLine(cena + " zł " + " - " + nazwa );
     }
 
-    public int Cena()
+    public void StanMagazynu(Magazyn Hala)
     {
-        return cenaProduktu;
+        Console.WriteLine("["+ Hala.StanMagazynowy[(ID-1)] + "]" + nazwa);
     }
-    public int IleMam()
-    {
-        return ilość;
-    }
+
 }
 
-interface InfoOProdukcie
-{
-    int Cena();
 
-    int IleMam();
-}
+
 

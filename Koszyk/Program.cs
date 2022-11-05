@@ -2,109 +2,42 @@
 
 class Program
 {
-     
+
     static void Main(string[] args)
     {
+        Magazyn Hala = new Magazyn();
+        List<Produkt> ListaProduktów = new List<Produkt>();
+        ListaProduktów.Add(new Produkt(20, "Książka", 1));
+        Hala.Dodaj(0, 10);
+        ListaProduktów.Add(new Produkt(15, "Piłka", 2));
+        Hala.Dodaj(1, 20);
+        ListaProduktów.Add(new Produkt(30, "Koszulka", 3));
+        Hala.Dodaj(2, 14);
+        ListaProduktów.Add(new Produkt(120, "Zacisk Hamulcowy", 4));
+        Hala.Dodaj(3, 17);
+        ListaProduktów.Add(new Produkt(100, "Łuk", 5));
+        Hala.Dodaj(4, 18);
+
         
 
-        Console.WriteLine("Dzien dobry witam w moim sklepie \n Poruszanie się w tym sklepie odbywa się za pomocą cyfr w kwadratowych nawiasach");
-        Menu();
+        Menu(ListaProduktów, Hala);
 
     }
-    
 
-    static void Menu()
+    static void Menu(List<Produkt> Lista, Magazyn Hala)
     {
-        var ksiazka = new Produkt();
-        ksiazka.Nazwij("Ksiazka");
-        ksiazka.Wyceń(13);
-        
-
-        var piłka = new Produkt();
-        piłka.Nazwij("Piłka");
-        piłka.Wyceń(45);
-
-        var rower = new Produkt();
-        rower.Nazwij("Rower");
-        rower.Wyceń(1200);
-
-        do
-        {  
-            Console.WriteLine("\n\n\n[1] Dodaj produkt \n[2] Lista zakupów \n[3] Policz cene za zakupy");
-            bool czySukces = int.TryParse(Console.ReadLine(), out int Wybór);
-            if (!czySukces)
-                break;
-
-            
-            switch (Wybór)
-            {
-                case 1:
-                    DodajProdukt(ksiazka, piłka, rower);
-                    break;
-                case 2:
-                    ListaZakupów(ksiazka, piłka, rower);
-                    break;
-                case 3:
-                    PoliczCene(ksiazka, piłka, rower);
-                    break;
-
-            }
-       } while (true);
-        void PoliczCene(Produkt a, Produkt b, Produkt c)
+        Console.WriteLine("Dzień dobry witam w sklepie oto lista produktów");
+        foreach (Produkt item in Lista)
         {
-            int Cena = a.IleMam()*a.Cena()+b.IleMam()*b.Cena()+c.IleMam()*c.Cena();
-            Console.WriteLine("Cena za wszystko: " + Cena);
+            item.OdczytajNazwe();
+        }
+        Console.WriteLine("Na Magazynie mamy");
+        foreach (Produkt item in Lista)
+        {
+            item.StanMagazynu(Hala);
         }
 
-       void ListaZakupów(Produkt a, Produkt b, Produkt c)
-       {
-            Console.WriteLine("\n\n\nMasz "+ a.IleMam()+ " książek  ");
-            Console.WriteLine("Masz "+b.IleMam()+ " piłek  " );
-            Console.WriteLine("Masz "+c.IleMam()+ " rowerów  " );
-       }
 
-         void DodajProdukt(Produkt a, Produkt b, Produkt c)
-        {
-            Console.WriteLine("\n\n\n[1]"); 
-            a.OdczytajNazwe();
-            Console.WriteLine("[2]"); 
-            b.OdczytajNazwe();
-            Console.WriteLine("[3]"); 
-            c.OdczytajNazwe();
-             bool czySukces = int.TryParse(Console.ReadLine(), out int Wybór);
-            if (!czySukces)
-                return;
-            Console.WriteLine("Napisz ilość");
-                  czySukces = int.TryParse(Console.ReadLine(), out int ile);
-            if (!czySukces)
-                return;
-
-            
-
-            
-
-            switch (Wybór)
-            {
-                 case 1:
-                 a.Ile(ile);
-                 break;
-                 case 2:
-                 b.Ile(ile);
-                 break;
-                 case 3:
-                 c.Ile(ile);
-                 break;
-
-                 default:
-                    break;
-
-            }
-            Console.WriteLine("\n\n\nMasz "+ a.IleMam()+ " książek  ");
-            Console.WriteLine("Masz "+b.IleMam()+ " piłek  " );
-            Console.WriteLine("Masz "+c.IleMam()+ " rowerów  " );
-            
-        }
-         
 
     }
 }
@@ -112,5 +45,5 @@ class Program
 
 
 
-    
+
 
