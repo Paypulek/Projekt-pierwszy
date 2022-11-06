@@ -56,9 +56,18 @@ class Program
 
     }
     static void PoliczCene(List<Produkt> Lista, Magazyn Hala, Zakupy Torba)
-    {
-
+    {   
+        int licznik =0;
+        int suma = 0;
+        foreach (Produkt item in Lista )
+                    {
+                       suma +=  item.cena * Torba.Lista[licznik];
+                    }
+                    Console.WriteLine("---------------");
+                    Console.WriteLine("Cena za wszystko = "+ suma);
+                    Console.WriteLine("---------------");
     }
+
     static void DodajDoKoszyka(List<Produkt> Lista, Magazyn Hala, Zakupy Torba)
     {
         int ID = -1;

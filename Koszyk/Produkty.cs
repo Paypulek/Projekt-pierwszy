@@ -5,7 +5,7 @@ class Produkt
 
 
     int ID;
-    int cena;
+    public int cena;
     string nazwa;
     public Produkt(int Cena, string Nazwa, int iD)
     {
