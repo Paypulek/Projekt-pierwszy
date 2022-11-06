@@ -1,6 +1,8 @@
 namespace Koszyk;
 class Zakupy : Kupowanie
 {
+  
+  
     public int[] Lista = new int[5];
 
     public void DodajNaListe(int ID, int ileKupione)
@@ -13,14 +15,6 @@ class Zakupy : Kupowanie
     {
         --ID;
         Lista[ID] -= ilość;
-    }
-
-    public bool SprawdźCzyMamy(int j, int ileChceszZwrócić)
-    {
-        if (Lista[j] >= ileChceszZwrócić)
-            return true;
-        else
-            return false;
     }
 }
 interface Kupowanie

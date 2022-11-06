@@ -8,6 +8,8 @@ namespace Koszyk;
       public bool SprawdźCzyMamy(int ID, int ileChceszKupić)
       {
         --ID;
+        Console.WriteLine("Liczba na magazynie:" +StanMagazynowy[ID] + "  a chcesz kupic " + ileChceszKupić);
+        
         if (StanMagazynowy[ID]>= ileChceszKupić)
         return true;
         else
