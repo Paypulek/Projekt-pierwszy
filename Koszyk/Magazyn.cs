@@ -1,21 +1,34 @@
 
 namespace Koszyk;
-   class Magazyn 
+   class Magazyn :Kupowanie
   {
       public int[] StanMagazynowy = new int [5];
       
    
-
-      public void Dodaj(int j, int ileNaMagazynie)
+      public bool SprawdźCzyMamy(int ID, int ileChceszKupić)
       {
-        StanMagazynowy[j] = ileNaMagazynie;
+        --ID;
+        if (StanMagazynowy[ID]>= ileChceszKupić)
+        return true;
+        else
+        return false;
+      }
+      public void Dodaj(int ID, int ileNaMagazynie)
+      {
+        --ID;
+        StanMagazynowy[ID] = ileNaMagazynie;
       }
 
-      public void Usuń(int ID, int ilość)
+      public void DodajNaListe(int ID, int ilość)
       {
         --ID;
         StanMagazynowy[ID] = StanMagazynowy[ID] - ilość;
       }
+      public void UsuńZListy(int ID, int ilość)
+    {
+        --ID;
+        StanMagazynowy[ID] += ilość;
+    }
 
 
   }

@@ -1,16 +1,32 @@
 namespace Koszyk;
-  class Zakupy 
-  {
+class Zakupy : Kupowanie
+{
     public int[] Lista = new int[5];
 
-     public void Dodaj(int j, int ileKupione)
-      {
-       Lista[j] = ileKupione;
-      }
+    public void DodajNaListe(int ID, int ileKupione)
+    {
+      --ID;
+        Lista[ID] += ileKupione;
+    }
 
-      public void Usuń(int ID, int ilość)
-      {
+    public void UsuńZListy(int ID, int ilość)
+    {
         --ID;
-        Lista[ID] = Lista[ID] - ilość;
-      }
-  }
+        Lista[ID] -= ilość;
+    }
+
+    public bool SprawdźCzyMamy(int j, int ileChceszZwrócić)
+    {
+        if (Lista[j] >= ileChceszZwrócić)
+            return true;
+        else
+            return false;
+    }
+}
+interface Kupowanie
+{
+    void DodajNaListe(int ID, int IleKupione);
+    void UsuńZListy(int ID, int ilość);
+}
+
+

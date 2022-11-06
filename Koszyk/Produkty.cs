@@ -33,6 +33,10 @@ class Produkt
     {
         Console.WriteLine("["+ Torba.Lista[(ID-1)] + "]" + nazwa);
     }
+    public void OdczytajID()
+    {
+        Console.WriteLine("["+ID+"] - " + nazwa );
+    }
 
 }
 
