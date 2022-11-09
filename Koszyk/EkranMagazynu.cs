@@ -1,0 +1,24 @@
+namespace Koszyk
+{
+    public class EkranMagazynu : EkranBase
+    {
+        private Magazyn magazyn;
+
+        public EkranMagazynu(Magazyn magazyn)
+        {
+            this.magazyn = magazyn;
+        }
+
+        public override void WykonajKomendę(ConsoleKey key)
+        {
+            // obsługa co jeśli ktoś wybierze produkt
+
+            base.WykonajKomendę(key);
+        }
+
+        public override void WyświetlEkran()
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
