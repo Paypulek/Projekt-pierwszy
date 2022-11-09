@@ -1,36 +1,50 @@
-﻿using System;
-namespace ModyfikatoryDostepu
+﻿
+ 
+ 
+ 
+using System.IO;
+using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+ 
+namespace Seria
 {
+        public class Person
+    {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+ 
+        public Person() { }
+ 
+        public Person(string imie, string nazwisko)
+        {
+            this.FirstName = imie;
+            this.LastName = nazwisko;
+        }
+    }
     class Program
     {
-        // Tutaj dojdzie do wykonania kodu naszej klasy
         static void Main(string[] args)
         {
-            Prostokat pr = new Prostokat();
-            pr.wysokosc = 4.5;
-            pr.szerokosc = 3.5;
-            pr.WyswietlInformacje();
+ 
+            //Person person = new Person();
+            List<Person> person = new List<Person>();
+            person.Add(new Person("Anna", "Karenina"));
+            person.Add(new Person("Adam", "Małysz"));
+            person.Add(new Person("Helga", "Niemra"));
+ 
+            XmlSerializer serializer = new XmlSerializer(typeof(List<Person>));
+            using (Stream s = File.Create("people.xml"))
+            {
+                serializer.Serialize(s, person);
+                //serializer.Serialize(s, person3);
+                s.Close();
+            }
             Console.ReadKey();
-            // Wykonanie programu
-            //Szerokosc: 3.5
-            //Wysokosc: 4.5
-            //Powierzchnia: 15.75
+ 
         }
-    }
-    class Prostokat
-    {
-        // pola klasy
-        public double szerokosc;
-        public double wysokosc;
-        public double ObliczPowierzchnie()
-        {
-            return szerokosc * wysokosc;
-        }
-        public void WyswietlInformacje()
-        {
-            Console.WriteLine("Szerokość: {0}", szerokosc);
-            Console.WriteLine("Wysokość: {0}", wysokosc);
-            Console.WriteLine("Powierzchnia: {0}", ObliczPowierzchnie());
-        }
-    }
+ 
+   }
+ 
 }

@@ -1,4 +1,4 @@
-class Klient
+public class Klient
 {
     public Klient(string IN, string M, int Stopy, int Ramki, int PodestyD, int PodestKom, int Stężenie, int Barierki, int SłupkiDoBar )
     {
@@ -13,8 +13,8 @@ class Klient
             słupkiDoBarierek=SłupkiDoBar;
             Console.WriteLine("Dodałem nowego wynajmującego!");
     }
-    string imieNazwisko{get;}
-    string miasto
+    public string imieNazwisko{get;}
+    public string miasto
     {get;}
 
     public int stopy {get;}

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 namespace Kalkulator;
 
 class Program
@@ -14,6 +16,7 @@ class Program
         List<Klient> ListaKlientów = new List<Klient>();
         do
         {
+            
             poruszanieSie = Menu();
             switch (poruszanieSie)
             {
@@ -61,6 +64,12 @@ class Program
         int słupkiDoBar = int.Parse(Console.ReadLine());
 
         ListaKlientow.Add(new Klient(imieNazwisk, miast, stop, ramk, podestyDre, podestyKom, stężen, barier, słupkiDoBar));
+        XmlSerializer serializer = new XmlSerializer(typeof(List<Klient>));
+        using (Stream s = File.Create("Klienci.xml"))
+        {
+        serializer.Serialize(s, ListaKlientow);
+        s.Close();
+        }
 
 
 
