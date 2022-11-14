@@ -35,4 +35,13 @@ public class Magazyn
     {
         return _produkty.SingleOrDefault(p => p.Produkt.ID == produkt.ID);
     }
+
+    public void PobierzStanMagazynu()
+    {
+        Console.WriteLine("Na Magazynie mamy");
+                     foreach (StanProduktu item in _produkty)
+                     {
+                         Console.WriteLine(item.Stan  + " x " + item.Produkt.nazwa);
+                     }
+    }
 }

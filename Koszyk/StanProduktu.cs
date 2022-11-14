@@ -10,5 +10,8 @@ namespace Koszyk
 
         public Produkt Produkt { get; }
         public int Stan { get; set; }
+
+
+        
     }
 }

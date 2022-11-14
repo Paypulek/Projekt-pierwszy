@@ -3,6 +3,7 @@ namespace Koszyk
     public class EkranMagazynu : EkranBase
     {
         private Magazyn magazyn;
+        
 
         public EkranMagazynu(Magazyn magazyn)
         {
@@ -18,7 +19,8 @@ namespace Koszyk
 
         public override void WyświetlEkran()
         {
-            throw new NotImplementedException();
+             magazyn.PobierzStanMagazynu();
+             
         }
     }
 }

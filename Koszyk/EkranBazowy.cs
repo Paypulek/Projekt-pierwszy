@@ -24,9 +24,9 @@ namespace Koszyk
 
         public override void WykonajKomendę(ConsoleKey key)
         {
-            var liczbaZMenu = Console.ReadKey();
+            //var liczbaZMenu = Console.ReadKey();
             Console.WriteLine("");
-            switch (liczbaZMenu.Key)
+            switch (key)
             {
                 case ConsoleKey.D2:
                     ObsługaEkranów.NowyEkran(new EkranMagazynu(_magazyn));
@@ -44,7 +44,7 @@ namespace Koszyk
                     // {
                     //     item.StanZakupów(Torba);
                     // }
-                    // Console.WriteLine("---------------");
+                     Console.WriteLine("---------------");
                     break;
                 case ConsoleKey.D4:
                     // PoliczCene(ListaProduktów, Hala, Torba);
