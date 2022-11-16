@@ -16,6 +16,21 @@ public class Magazyn
             return false;
     }
 
+   
+    public void PowiedzZaIle()
+    {
+        int i =0;
+        Console.WriteLine("");
+        Console.WriteLine("Cena podana obok");
+        foreach (StanProduktu item in _produkty)
+        {
+            ++i;
+            Console.WriteLine("["+ i +"] -" +item.Produkt.cena + "zł " + item.Produkt.nazwa);
+            
+        }
+
+    }
+
     public void Dodaj(Produkt produkt, int stan)
     {
         _produkty.Add(new StanProduktu(produkt, stan));
@@ -38,10 +53,12 @@ public class Magazyn
 
     public void PobierzStanMagazynu()
     {
+        Console.WriteLine("");
         Console.WriteLine("Na Magazynie mamy");
-                     foreach (StanProduktu item in _produkty)
-                     {
-                         Console.WriteLine(item.Stan  + " x " + item.Produkt.nazwa);
-                     }
+        foreach (StanProduktu item in _produkty)
+        {
+            
+            Console.WriteLine( +item.Stan + " x " + item.Produkt.nazwa);
+        }
     }
 }
