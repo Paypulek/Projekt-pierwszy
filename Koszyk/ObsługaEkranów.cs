@@ -4,6 +4,7 @@ namespace Koszyk
     {
         public static void PoprzedniEkran()
         {
+
         }
 
         public static void NowyEkran(IEkran ekran)
@@ -14,5 +15,7 @@ namespace Koszyk
 
             ekran.WykonajKomendę(wybór.Key);
         }
+
+        
     }
 }

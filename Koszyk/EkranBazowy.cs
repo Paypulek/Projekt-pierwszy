@@ -3,7 +3,7 @@ namespace Koszyk
     public class EkranBazowy : EkranBase
     {
         private Magazyn _magazyn = new Magazyn();
-        private Zakupy _zakupy = new Zakupy();
+        
 
         public EkranBazowy()
         {
@@ -16,6 +16,8 @@ namespace Koszyk
 
         public override void WyświetlEkran()
         {
+            Console.WriteLine("");
+            Console.WriteLine("[1] - Kup produkt");
             Console.WriteLine("[2] - Sprawdź co jest na magazynie");
             Console.WriteLine("[3] - Sprawdź listę zakupów");
             Console.WriteLine("[4] - Policz cene");
@@ -28,6 +30,9 @@ namespace Koszyk
             Console.WriteLine("");
             switch (key)
             {
+                case ConsoleKey.D1:
+                    ObsługaEkranów.NowyEkran(new EkranZakupu (_magazyn));
+                    break;
                 case ConsoleKey.D2:
                     ObsługaEkranów.NowyEkran(new EkranMagazynu(_magazyn));
                     // Console.WriteLine("Na Magazynie mamy");

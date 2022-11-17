@@ -2,6 +2,7 @@ namespace Koszyk
 {
     public class EkranMagazynu : EkranBase
     {
+        
         private Magazyn magazyn;
         
 
