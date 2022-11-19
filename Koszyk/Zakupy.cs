@@ -17,6 +17,7 @@ namespace Koszyk
         }
         public override void WyświetlEkran()
         {
+            
             Console.WriteLine("Oto za ile i co możesz u nas kupić :) ");
             magazyn.PowiedzZaIle();
             Console.WriteLine("Napisz numer produktu");

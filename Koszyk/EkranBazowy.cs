@@ -7,11 +7,11 @@ namespace Koszyk
 
         public EkranBazowy()
         {
-            _magazyn.Dodaj(new Produkt(20, "Książka", 1), 10);
-            _magazyn.Dodaj(new Produkt(15, "Piłka", 1), 20);
-            _magazyn.Dodaj(new Produkt(30, "Koszulka", 1), 14);
-            _magazyn.Dodaj(new Produkt(120, "Zacisk Hamulcowy", 1), 17);
-            _magazyn.Dodaj(new Produkt(100, "Łuk", 1), 18);
+            _magazyn.Dodaj(new Produkt(20, "Książka"), 10);
+            _magazyn.Dodaj(new Produkt(15, "Piłka"), 20);
+            _magazyn.Dodaj(new Produkt(30, "Koszulka"), 14);
+            _magazyn.Dodaj(new Produkt(120, "Zacisk Hamulcowy"), 17);
+            _magazyn.Dodaj(new Produkt(100, "Łuk" ), 18);
         }
 
         public override void WyświetlEkran()
