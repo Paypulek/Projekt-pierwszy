@@ -7,8 +7,8 @@ namespace Koszyk
     {
         private Magazyn magazyn;
         private List<Produkt> lista = new List<Produkt>();
-
-        public List<RekordRachunku> listaZakupów = new List<RekordRachunku>();
+        private RekordRachunku Lista = new RekordRachunku();
+        
 
 
         public EkranZakupu(Magazyn magazyn)
@@ -24,6 +24,8 @@ namespace Koszyk
             var numerProduktu = Convert.ToInt16(Console.ReadLine());
             Console.WriteLine("Napisz ilość");
             var ilość = Convert.ToInt32(Console.ReadLine());
+            
+           
             
             
             var key = Console.ReadKey();
@@ -46,4 +48,6 @@ namespace Koszyk
             base.WykonajKomendę(key);
         }
     }
+
+    
 }
