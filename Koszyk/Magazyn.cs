@@ -15,6 +15,14 @@ public class Magazyn
         else
             return false;
     }
+    public Produkt ObiektXnaLiscie(int x)
+    {
+        return _produkty[x-1].Produkt;
+    }
+    public string PozycjaXNazwa(int x)
+    {
+        return _produkty[x-1].Produkt.nazwa;
+    }
 
    
     public void PowiedzZaIle()

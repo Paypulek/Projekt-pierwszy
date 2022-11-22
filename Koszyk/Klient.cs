@@ -2,19 +2,20 @@ namespace Koszyk;
 
 public class RekordRachunku
 {
-    public List<RekordRachunku> ListaZakupów = new List<RekordRachunku>();
+    
    
     
-        public void Dodaj(int numer, int stan,Magazyn magazyn)
+    public RekordRachunku(Produkt produkt, int ilość)
     {
-        
-        ListaZakupów.Add(new RekordRachunku(produkt, stan));
+        this.produkt = produkt;
+        this.ilość = ilość;
     }
+       
     
     
 
-    int ilość{get;set;}
-
+    public int ilość{get;set;}
+    public Produkt produkt{get;}
 }
 
 

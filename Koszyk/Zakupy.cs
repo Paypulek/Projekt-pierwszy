@@ -6,8 +6,8 @@ namespace Koszyk
     public class EkranZakupu : EkranBase, IEkran
     {
         private Magazyn magazyn;
-        private List<Produkt> lista = new List<Produkt>();
-        private RekordRachunku Lista = new RekordRachunku();
+        public List<RekordRachunku> lista = new List<RekordRachunku>();
+        
         
 
 
@@ -20,16 +20,14 @@ namespace Koszyk
             
             Console.WriteLine("Oto za ile i co możesz u nas kupić :) ");
             magazyn.PowiedzZaIle();
-            Console.WriteLine("Napisz numer produktu");
-            var numerProduktu = Convert.ToInt16(Console.ReadLine());
-            Console.WriteLine("Napisz ilość");
-            var ilość = Convert.ToInt32(Console.ReadLine());
+            
+            
             
            
             
             
             var key = Console.ReadKey();
-            base.WykonajKomendę(key.Key);
+            this.WykonajKomendę(key.Key);
 
 
 
@@ -41,11 +39,57 @@ namespace Koszyk
 
         public override void WykonajKomendę(ConsoleKey key)
         {
+            int ilość;
+            try
+            {
+            switch(key)
+            {
+                case ConsoleKey.D1:
+                Console.WriteLine(magazyn.PozycjaXNazwa(1));
+                Console.WriteLine("Wpisz ile chcesz towaru");
+                ilość = Convert.ToInt32(Console.ReadKey());
 
+                magazyn.Usuń(magazyn.ObiektXnaLiscie(1), ilość);
+                lista.Add(magazyn.ObiektXnaLiscie(1), ilość);
+                break;
+                case ConsoleKey.D2:
+                Console.WriteLine(magazyn.PozycjaXNazwa(2));
+                break;
+                case ConsoleKey.D3:
+                Console.WriteLine(magazyn.PozycjaXNazwa(3));
+                break;
+                case ConsoleKey.D4:
+                Console.WriteLine(magazyn.PozycjaXNazwa(4));
+                break;
+                case ConsoleKey.D5:
+                Console.WriteLine(magazyn.PozycjaXNazwa(5));
+                break;
+                case ConsoleKey.D6:
+                Console.WriteLine(magazyn.PozycjaXNazwa(6));
+                break;
+                case ConsoleKey.D7:
+                Console.WriteLine(magazyn.PozycjaXNazwa(7));
+                break;
+                case ConsoleKey.D8:
+                Console.WriteLine(magazyn.PozycjaXNazwa(8));
+                break;
+                case ConsoleKey.D9:
+                Console.WriteLine(magazyn.PozycjaXNazwa(9));
+                break;
+                default:
+                base.WykonajKomendę(key);
+                return;
+            }
+            }
+            catch
+            {
+                Console.WriteLine("Sprawdz czy jest taki produkt idiotko!");
+            }
+                
 
-            // obsługa co jeśli ktoś wybierze produkt
+            
 
-            base.WykonajKomendę(key);
+            
         }
     }
 
