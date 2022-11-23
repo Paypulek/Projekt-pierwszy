@@ -22,6 +22,7 @@ namespace Koszyk
             Console.WriteLine("[3] - Sprawdź listę zakupów");
             Console.WriteLine("[4] - Policz cene");
             Console.WriteLine("[5] - Wyjdź");
+            Console.WriteLine("[9] - Powrót");
         }
 
         public override void WykonajKomendę(ConsoleKey key)
@@ -44,17 +45,15 @@ namespace Koszyk
                     Console.WriteLine("---------------");
                     break;
                 case ConsoleKey.D3:
-                    // Console.WriteLine("W koszyku mamy");
-                    // foreach (Produkt item in ListaProduktów)
-                    // {
-                    //     item.StanZakupów(Torba);
-                    // }
+                new EkranZakupu (_magazyn).PokażZakupy();
+                    
                      Console.WriteLine("---------------");
                     break;
                 case ConsoleKey.D4:
                     // PoliczCene(ListaProduktów, Hala, Torba);
                     break;
-                case ConsoleKey.D5:
+                case ConsoleKey.D9:
+                ObsługaEkranów.NowyEkran(new EkranBazowy());
                     return;
                 default:
                     base.WykonajKomendę(key);

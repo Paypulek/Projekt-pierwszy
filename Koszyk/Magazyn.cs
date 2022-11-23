@@ -17,56 +17,63 @@ public class Magazyn
     }
     public Produkt ObiektXnaLiscie(int x)
     {
-        return _produkty[x-1].Produkt;
+        return _produkty[x - 1].Produkt;
     }
     public string PozycjaXNazwa(int x)
     {
-        return _produkty[x-1].Produkt.nazwa;
+        return _produkty[x - 1].Produkt.nazwa;
     }
 
-   
+
     public void PowiedzZaIle()
     {
-        int i =0;
+        int i = 0;
         Console.WriteLine("");
         Console.WriteLine("Cena podana obok");
         foreach (StanProduktu item in _produkty)
         {
             ++i;
-            Console.WriteLine("["+ i +"] -" +item.Produkt.cena + "zł " + item.Produkt.nazwa);
-            
+            Console.WriteLine("[" + i + "] -" + item.Produkt.cena + "zł " + item.Produkt.nazwa);
+
         }
 
     }
+
 
     public void Dodaj(Produkt produkt, int stan)
     {
         _produkty.Add(new StanProduktu(produkt, stan));
     }
 
-    public void Usuń(Produkt produkt, int liczba)
+    public void UsuńiKup(int numerNaLiscie, List<RekordRachunku> Lista)
     {
-        StanProduktu? stanProduktu = PobierzStanProduktu(produkt);
+        Console.WriteLine("Wpisz ile chcesz towaru");
+               int liczba = Convert.ToInt32(Console.ReadLine());
+        StanProduktu? stanProduktu = PobierzStanProduktu(_produkty[numerNaLiscie].Produkt);
 
         if (stanProduktu.Stan < liczba)
             throw new Exception("Za mało produktów na stanie");
         else
-            stanProduktu.Stan = stanProduktu.Stan - liczba;
-    }
-
-    private StanProduktu? PobierzStanProduktu(Produkt produkt)
-    {
-        return _produkty.SingleOrDefault(p => p.Produkt.ID == produkt.ID);
-    }
-
-    public void PobierzStanMagazynu()
-    {
-        Console.WriteLine("");
-        Console.WriteLine("Na Magazynie mamy");
-        foreach (StanProduktu item in _produkty)
         {
-            
-            Console.WriteLine( +item.Stan + " x " + item.Produkt.nazwa);
+            stanProduktu.Stan = stanProduktu.Stan - liczba;
+            Lista.Add(new RekordRachunku(_produkty[numerNaLiscie].Produkt, liczba));
+
         }
     }
-}
+
+        private StanProduktu? PobierzStanProduktu(Produkt produkt)
+        {
+            return _produkty.SingleOrDefault(p => p.Produkt.ID == produkt.ID);
+        }
+
+        public void PobierzStanMagazynu()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Na Magazynie mamy");
+            foreach (StanProduktu item in _produkty)
+            {
+
+                Console.WriteLine(+item.Stan + " x " + item.Produkt.nazwa);
+            }
+        }
+    }
