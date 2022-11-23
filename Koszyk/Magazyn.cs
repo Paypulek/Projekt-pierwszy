@@ -49,22 +49,24 @@ public class Magazyn
     {
         try
         {
-        Console.WriteLine("Wpisz ile chcesz towaru");
-        int liczba = Convert.ToInt32(Console.ReadLine());
-        StanProduktu? stanProduktu = PobierzStanProduktu(Produkt);
+            Console.WriteLine("Wpisz ile chcesz towaru");
+            int liczba = Convert.ToInt32(Console.ReadLine());
+            StanProduktu? stanProduktu = PobierzStanProduktu(Produkt);
 
-        if (stanProduktu.Stan < liczba)
-            throw new Exception("Za mało produktów na stanie");
-        else
-        {   Console.WriteLine(stanProduktu.Stan);
-            stanProduktu.Stan = stanProduktu.Stan - liczba;
-            Lista.Add(new RekordRachunku(Produkt, liczba));
-            Console.WriteLine("Pomyślnie dodano do listy Zakupów");
-            Console.WriteLine(stanProduktu.Stan);
+            if (stanProduktu.Stan < liczba)
+                throw new Exception("Za mało produktów na stanie");
+            else
+            {
+                Console.WriteLine(stanProduktu.Stan);
+                stanProduktu.Stan = stanProduktu.Stan - liczba;
+                Lista.Add(new RekordRachunku(Produkt, liczba));
+                Console.WriteLine("Pomyślnie dodano do listy Zakupów");
+                Console.WriteLine(stanProduktu.Stan);
 
+            }
         }
-        }
-        catch{
+        catch
+        {
             Console.WriteLine("cos poszlo nie tak. Zobacz na magazynie czy mamy tyle produktow");
         }
 

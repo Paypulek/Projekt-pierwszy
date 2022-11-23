@@ -12,6 +12,7 @@
             _magazyn.DodajNaMagazyn(new Produkt(Latarka, 50, 1));
             _magazyn.DodajNaMagazyn(new Produkt(Mikrofalówka, 75, 2));
             _magazyn.DodajNaMagazyn(new Produkt(PanelFotowoltaiczny, 350, 3));
+            ObsługaEkranu.NowyEkran(new EkranGłówny());
 
         }
     }

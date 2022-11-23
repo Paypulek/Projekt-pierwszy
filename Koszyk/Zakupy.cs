@@ -35,8 +35,8 @@ namespace Koszyk
         }
         public override void WykonajKomendę(ConsoleKey key)
         {
-            // try
-            //{
+             try
+            {
             switch (key)
             {
                 case ConsoleKey.D1:
@@ -74,14 +74,14 @@ namespace Koszyk
                     break;
 
                 default:
-                    base.WyświetlEkran();
+                    
                     break;
             }
-            // }
-            // catch
-            // {
-            //     Console.WriteLine("Sprawdz czy jest taki produkt idiotko!");
-            // }
+            }
+             catch
+             {
+                 Console.WriteLine("Sprawdz czy jest taki produkt idiotko!");
+             }
 
 
 

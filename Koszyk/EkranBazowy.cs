@@ -23,55 +23,29 @@ namespace Koszyk
             Console.WriteLine("[2] - Sprawdź co jest na magazynie");
             Console.WriteLine("[3] - Sprawdź listę zakupów");
             Console.WriteLine("[4] - Policz cene");
-            Console.WriteLine("[5] - Wyjdź");
-            Console.WriteLine("[9] - Powrót");
+            Console.WriteLine("[Esc] - Wyjdź");
+
         }
 
         public override void WykonajKomendę(ConsoleKey key)
         {
-            EkranZakupu ekranZakupu = new EkranZakupu(_magazyn);
-            EkranBazowy podstawoy = new EkranBazowy();
-            //var liczbaZMenu = Console.ReadKey();
-            Console.WriteLine("");
-            
-
             switch (key)
             {
                 case ConsoleKey.D1:
-                    ObsługaEkranów.NowyEkran(ekranZakupu);
+                    ObsługaEkranów.NowyEkran(new EkranZakupu(_magazyn));
                     break;
                 case ConsoleKey.D2:
                     ObsługaEkranów.NowyEkran(new EkranMagazynu(_magazyn));
-                    // Console.WriteLine("Na Magazynie mamy");
-                    // foreach (Produkt item in ListaProduktów)
-                    // {
-                    //     item.StanMagazynu(Hala);
-                    // }
-
                     Console.WriteLine("---------------");
                     break;
                 case ConsoleKey.D3:
-                    ekranZakupu.PokażZakupy();
-
-                    Console.WriteLine("---------------");
-
                     break;
-                case ConsoleKey.D5:
-                    
-                    return;
-
                 case ConsoleKey.D9:
-                    ObsługaEkranów.NowyEkran(new EkranBazowy());
                     return;
                 default:
                     base.WykonajKomendę(key);
                     break;
-
-
-
             }
-
-
         }
     }
 }

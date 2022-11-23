@@ -1,11 +1,7 @@
-namespace Koszyk
+namespace Nowy
 {
-    public static class ObsługaEkranów
+    public static class ObslugaEkranu
     {
-        public static void PoprzedniEkran()
-        {
-
-        }
 
         public static void NowyEkran(IEkran ekran)
         {
@@ -13,7 +9,7 @@ namespace Koszyk
 
             var wybór = Console.ReadKey();
 
-            ekran.WykonajKomendę(wybór.Key);
+            ekran.WykonajKomende(wybór.Key);
         }
 
 
