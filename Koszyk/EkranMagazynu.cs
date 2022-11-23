@@ -21,6 +21,8 @@ namespace Koszyk
         public override void WyświetlEkran()
         {
              magazyn.PobierzStanMagazynu();
+             Console.ReadKey();
+             ObsługaEkranów.NowyEkran(new EkranBazowy());
              
         }
     }

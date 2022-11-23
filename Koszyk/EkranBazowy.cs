@@ -3,7 +3,9 @@ namespace Koszyk
     public class EkranBazowy : EkranBase
     {
         private Magazyn _magazyn = new Magazyn();
-        
+
+        public EkranBazowy podstawoy = new EkranBazowy();
+
 
         public EkranBazowy()
         {
@@ -11,7 +13,7 @@ namespace Koszyk
             _magazyn.Dodaj(new Produkt(15, "Piłka"), 20);
             _magazyn.Dodaj(new Produkt(30, "Koszulka"), 14);
             _magazyn.Dodaj(new Produkt(120, "Zacisk Hamulcowy"), 17);
-            _magazyn.Dodaj(new Produkt(100, "Łuk" ), 18);
+            _magazyn.Dodaj(new Produkt(100, "Łuk"), 18);
         }
 
         public override void WyświetlEkran()
@@ -27,12 +29,16 @@ namespace Koszyk
 
         public override void WykonajKomendę(ConsoleKey key)
         {
+            EkranZakupu ekranZakupu = new EkranZakupu(_magazyn);
+            EkranBazowy podstawoy = new EkranBazowy();
             //var liczbaZMenu = Console.ReadKey();
             Console.WriteLine("");
+            
+
             switch (key)
             {
                 case ConsoleKey.D1:
-                    ObsługaEkranów.NowyEkran(new EkranZakupu (_magazyn));
+                    ObsługaEkranów.NowyEkran(ekranZakupu);
                     break;
                 case ConsoleKey.D2:
                     ObsługaEkranów.NowyEkran(new EkranMagazynu(_magazyn));
@@ -45,20 +51,27 @@ namespace Koszyk
                     Console.WriteLine("---------------");
                     break;
                 case ConsoleKey.D3:
-                new EkranZakupu (_magazyn).PokażZakupy();
+                    ekranZakupu.PokażZakupy();
+
+                    Console.WriteLine("---------------");
+
+                    break;
+                case ConsoleKey.D5:
                     
-                     Console.WriteLine("---------------");
-                    break;
-                case ConsoleKey.D4:
-                    // PoliczCene(ListaProduktów, Hala, Torba);
-                    break;
+                    return;
+
                 case ConsoleKey.D9:
-                ObsługaEkranów.NowyEkran(new EkranBazowy());
+                    ObsługaEkranów.NowyEkran(new EkranBazowy());
                     return;
                 default:
                     base.WykonajKomendę(key);
                     break;
+
+
+
             }
+
+
         }
     }
 }
