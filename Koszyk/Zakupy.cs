@@ -5,16 +5,13 @@ namespace Koszyk
 
     public class EkranZakupu : EkranBazowy, IEkran
     {
-        private Magazyn magazyn;
-        public List<RekordRachunku> lista = new List<RekordRachunku>();
+        private Magazyn magazyn = StanAplikacji.Magazyn;
+        public List<RekordRachunku> lista = StanAplikacji.ListaZakupowa;
 
 
 
 
-        public EkranZakupu(Magazyn magazyn)
-        {
-            this.magazyn = magazyn;
-        }
+       
 
         public void PokażZakupy()
         {

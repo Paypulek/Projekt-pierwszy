@@ -2,18 +2,14 @@ namespace Koszyk
 {
     public class EkranBazowy : EkranBase
     {
-        private Magazyn _magazyn = new Magazyn();
+         
 
-        public EkranBazowy podstawoy = new EkranBazowy();
+        
 
 
         public EkranBazowy()
         {
-            _magazyn.Dodaj(new Produkt(20, "Książka"), 10);
-            _magazyn.Dodaj(new Produkt(15, "Piłka"), 20);
-            _magazyn.Dodaj(new Produkt(30, "Koszulka"), 14);
-            _magazyn.Dodaj(new Produkt(120, "Zacisk Hamulcowy"), 17);
-            _magazyn.Dodaj(new Produkt(100, "Łuk"), 18);
+            
         }
 
         public override void WyświetlEkran()
@@ -32,10 +28,10 @@ namespace Koszyk
             switch (key)
             {
                 case ConsoleKey.D1:
-                    ObsługaEkranów.NowyEkran(new EkranZakupu(_magazyn));
+                    ObsługaEkranów.NowyEkran(new EkranZakupu());
                     break;
                 case ConsoleKey.D2:
-                    ObsługaEkranów.NowyEkran(new EkranMagazynu(_magazyn));
+                    ObsługaEkranów.NowyEkran(new EkranMagazynu(StanAplikacji.Magazyn));
                     Console.WriteLine("---------------");
                     break;
                 case ConsoleKey.D3:

@@ -2,6 +2,7 @@
 using System;
 using System.Text;
 
+
 namespace Kalkulator
 {
     class Program
@@ -17,7 +18,7 @@ namespace Kalkulator
                 var znak = klk.WprowadźOperator(); ;
                 var liczba2 = klk.WprowadźLiczbe();
 
-                    liczba1= klk.Oblicz(liczba1, znak, liczba2);
+                    liczba1= Kalkulator.Oblicz(liczba1, znak, liczba2);
                 Console.WriteLine("wynik to {0}", liczba1);
             }
         }
@@ -36,7 +37,14 @@ namespace Kalkulator
             return znak;
         }
 
-        private int Oblicz(int liczba, char znak, int liczba1)
+       
+
+
+    }
+
+    public static class Kalkulator
+    {
+          public static int Oblicz(int liczba, char znak, int liczba1)
         {
             switch (znak)
             {
@@ -67,8 +75,8 @@ namespace Kalkulator
 
         }
 
-
     }
+    
 }
 
 

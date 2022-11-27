@@ -6,7 +6,7 @@ class Program
 
     static void Main(string[] args)
     {
-        Console.WriteLine("Eko");
+        StanAplikacji.InicjujProdukty();
         ObsługaEkranów.NowyEkran(new EkranBazowy());
     }
    
