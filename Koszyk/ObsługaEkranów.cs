@@ -9,11 +9,16 @@ namespace Koszyk
 
         public static void NowyEkran(IEkran ekran)
         {
+            while(true)
+            {
             ekran.WyświetlEkran();
 
             var wybór = Console.ReadKey();
+            if (wybór.Key == ConsoleKey.D9)
+            return;
 
             ekran.WykonajKomendę(wybór.Key);
+            }
         }
 
 

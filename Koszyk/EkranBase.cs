@@ -8,7 +8,7 @@ namespace Koszyk
             {
                 case ConsoleKey.Escape:
                     ObsługaEkranów.PoprzedniEkran();
-                    break;
+                    return;
                 default:
                     ObsługaEkranów.NowyEkran(this);
                     break;

@@ -13,14 +13,7 @@ namespace Koszyk
 
        
 
-        public void PokażZakupy()
-        {
-            foreach (var item in this.lista)
-            {
-                Console.WriteLine(item.produkt.nazwa + "  x " + item.ilość + " Lączna cena wynosi: " + (item.produkt.cena * item.ilość));
-
-            }
-        }
+        
         public override void WyświetlEkran()
         {
             
@@ -71,7 +64,7 @@ namespace Koszyk
                     break;
 
                 default:
-                    
+                    base.WykonajKomendę(key);
                     break;
             }
             }
