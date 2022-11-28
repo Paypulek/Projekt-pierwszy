@@ -15,7 +15,7 @@ namespace Koszyk
 
             var wybór = Console.ReadKey();
             if (wybór.Key == ConsoleKey.D9)
-            return;
+            break;
 
             ekran.WykonajKomendę(wybór.Key);
             }

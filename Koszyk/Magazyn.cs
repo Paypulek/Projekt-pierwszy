@@ -49,6 +49,7 @@ public class Magazyn
     {
         try
         {
+            Console.WriteLine("");
             Console.WriteLine("Wpisz ile chcesz towaru");
             int liczba = Convert.ToInt32(Console.ReadLine());
             StanProduktu? stanProduktu = PobierzStanProduktu(Produkt);
@@ -61,7 +62,7 @@ public class Magazyn
                 stanProduktu.Stan = stanProduktu.Stan - liczba;
                 Lista.Add(new RekordRachunku(Produkt, liczba));
                 Console.WriteLine("Pomyślnie dodano do listy Zakupów");
-                Console.WriteLine(stanProduktu.Stan);
+                Console.WriteLine("Na Magazynie zostało jeszcze " + stanProduktu.Stan + " x " + stanProduktu.Produkt.nazwa);
 
             }
         }

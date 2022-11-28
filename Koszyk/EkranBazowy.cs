@@ -18,7 +18,7 @@ namespace Koszyk
             Console.WriteLine("[1] - Kup produkt");
             Console.WriteLine("[2] - Sprawdź co jest na magazynie");
             Console.WriteLine("[3] - Sprawdź listę zakupów");
-            Console.WriteLine("[4] - Policz cene");
+            Console.WriteLine("[4] - Policz koszt zamówienia z wysyłka");
             Console.WriteLine("[9] - Wyjdź");
 
         }
@@ -40,7 +40,7 @@ namespace Koszyk
                     StanAplikacji.PokażZakupy();
                     break;
                 case ConsoleKey.D4:
-                StanAplikacji.PoliczCenę();
+                    StanAplikacji.PokażCeneWysyłki();
                     return;
                 default:
                     base.WykonajKomendę(key);

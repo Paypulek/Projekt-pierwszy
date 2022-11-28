@@ -16,7 +16,7 @@ namespace Koszyk
         
         public override void WyświetlEkran()
         {
-            
+                Console.WriteLine("");
                 Console.WriteLine("Oto za ile i co możesz u nas kupić :) ");
                 magazyn.PowiedzZaIle();
                 Console.WriteLine("wciskajac [9] cofniesz sie spowrotem");
@@ -25,6 +25,7 @@ namespace Koszyk
         }
         public override void WykonajKomendę(ConsoleKey key)
         {
+            Console.WriteLine("");
              try
             {
             switch (key)
@@ -70,6 +71,7 @@ namespace Koszyk
             }
              catch
              {
+                Console.WriteLine("");
                  Console.WriteLine("Sprawdz czy jest taki produkt idiotko!");
              }
 
