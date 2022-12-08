@@ -1,7 +1,26 @@
+namespace Transport;
 public class Paczka
 {
     int wysokość, szerokość, długość;
-    public Paczka(int wysokość, int szerokość, int długość) { this.wysokość = wysokość; this.szerokość = szerokość; this.długość = długość; }
+    public Paczka()
+     {
+        Console.WriteLine("Podaj wysokość:");
+        int wysokość = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Podaj szerkość:");
+        int szerokość = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Podaj długość:");
+        int długość = Convert.ToInt32(Console.ReadLine());
+        this.wysokość = wysokość;
+        this.szerokość = szerokość;
+         this.długość = długość;
+     }
+
+     public Paczka(int Wysokość, int Szerokość, int Długość)
+     {
+        this.wysokość=Wysokość;
+        this.szerokość=Szerokość;
+        this.długość=Długość;
+     }
 
     public void UłóżDwaRodzaje()
     {
@@ -12,7 +31,6 @@ public class Paczka
     {
         int IlePaczek = 0;
         Paczka NajlepszeUłożenie = null;
-        for(int i = 0; i>=3;i++)
         if (IlePaczek < this.IleWejdzie(Większa)) { IlePaczek = this.IleWejdzie(Większa); NajlepszeUłożenie = new Paczka (this.wysokość, this.szerokość, this.długość); }
         this.ObróćPionowo();
         if (IlePaczek < this.IleWejdzie(Większa)) { IlePaczek = this.IleWejdzie(Większa); NajlepszeUłożenie = new Paczka (this.wysokość, this.szerokość, this.długość); }
@@ -24,7 +42,7 @@ public class Paczka
         if (IlePaczek < this.IleWejdzie(Większa)) { IlePaczek = this.IleWejdzie(Większa); NajlepszeUłożenie = new Paczka (this.wysokość, this.szerokość, this.długość); }
         this.ObróćPionowo();
         if (IlePaczek < this.IleWejdzie(Większa)) { IlePaczek = this.IleWejdzie(Większa); NajlepszeUłożenie = new Paczka (this.wysokość, this.szerokość, this.długość); }
-
+        Console.WriteLine("Tej paczki mi wejdzie:" + IlePaczek);
         if (NajlepszeUłożenie != null)
         {
             this.długość = NajlepszeUłożenie.długość;
@@ -46,6 +64,7 @@ public class Paczka
 
     private void ObróćPoziomo()
     {
+        Console.WriteLine("Obracam poziomo paczke");
         int i = this.długość;
         this.długość = this.szerokość;
         this.szerokość = i;
@@ -53,6 +72,7 @@ public class Paczka
 
     private void ObróćPionowo()
     {
+        Console.WriteLine("Obracam pionowo paczkę");
         int i = this.wysokość;
         this.wysokość = this.długość;
         this.długość = i;
@@ -60,6 +80,6 @@ public class Paczka
 
     public void PokażMojeZmienne()
     {
-        Console.WriteLine(this.długość + " " + this.szerokość + " " + this.wysokość);
+        Console.WriteLine(this.długość + "<--- długosc " + this.szerokość + " <-- szerokosc" + this.wysokość + "<-- wysokosc");
     }
 }
