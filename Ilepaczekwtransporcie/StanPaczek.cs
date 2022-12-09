@@ -1,8 +1,11 @@
+namespace Transport;
 public class StanPaczek
 {
         public Paczka Paczka { get; }
         public int Stan { get;}
-        public StanPaczek(Paczka paczka, int stan) {this.Paczka=paczka; this.Stan=stan;}
+        public StanPaczek() {this.Paczka=new Paczka();
+        Console.WriteLine("Podaj ilość paczek");
+        int stan = Convert.ToInt32(Console.ReadLine()); this.Stan=stan;}
         
 
 }
