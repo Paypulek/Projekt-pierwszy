@@ -1,4 +1,6 @@
+
 namespace Transport;
+
 public class Paczka
 {
     int wysokość, szerokość, długość;
