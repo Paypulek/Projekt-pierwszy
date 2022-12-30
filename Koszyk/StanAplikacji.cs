@@ -34,12 +34,19 @@ public static class StanAplikacji
         public static int PoliczCenę()
         {
             Console.WriteLine("");
+            int iloscTransportu =0;
+            int objetosc = 0;
             int cena =0;
             foreach (var item in ListaZakupowa)
             {
                  cena += item.produkt.cena * item.ilość;
+                 objetosc += (int)item.produkt.rodzajOpakowania*item.ilość;
             }
+
+            iloscTransportu = objetosc/200;
+
             Console.WriteLine("Cena zamówienia przy odbiorze osobistym wynosi: " + cena);
+            Console.WriteLine("Paczka pojedzie w " + (iloscTransportu+1) + " transportach");
             return cena;
 
         }
