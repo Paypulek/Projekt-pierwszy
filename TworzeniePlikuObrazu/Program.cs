@@ -11,18 +11,23 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Console.ReadKey();
-
-            using (Bitmap b = new Bitmap(640, 480))
+            using (Bitmap b = new Bitmap(640,480))
             {
                 using (Graphics g = Graphics.FromImage(b))
                 {
-                    g.Clear(Color.FromArgb(230,1,1,1));
-					g.DrawLine(Pens.Red, 10, 10, 100, 100);
+                    g.Clear(Color.White);
+					g.DrawLine(Pens.Red, 5, 5, 100, 100);
+                    g.DrawLine(Pens.Blue,100,100,100,300);
+                    g.DrawString("KURA Nioska", SystemFonts.DialogFont, Brushes.Blue ,25,20);
+                    PointF[] Punkcik = new PointF[]{new PointF(200,250), new PointF(100,270)};
+                    g.DrawCurve(Pens.Cyan, Punkcik, 20);
+                    Punkcik = new PointF[]{new PointF(500,300), new PointF(150,100), new PointF(233,340)};
+                    g.DrawPolygon(Pens.Gold,Punkcik);
 
                 }
-                
                 b.Save(@"C:\tutorials\blank_640_480.png");
+                
+                
                 int LiczbaNieBiałych =0;
 
                 for (int i = 0; i<640; i++)
@@ -30,7 +35,7 @@ namespace ConsoleApplication1
                     for (int j = 0; j <480; j++)
                     {
                         var ColorPixel = b.GetPixel(i,j);
-                       if( ColorPixel != Color.FromArgb(230,1,1,1))
+                       if( ColorPixel != Color.FromArgb(255,255,255))
                        {
                          LiczbaNieBiałych++;
                        }
