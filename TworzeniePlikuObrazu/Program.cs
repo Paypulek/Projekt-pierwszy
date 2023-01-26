@@ -11,6 +11,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
+            Figura.StwórzObraz(@"C:\tutorials\blank_640_480.png");
             using (Bitmap b = new Bitmap(640,480))
             {
                 using (Graphics g = Graphics.FromImage(b))
@@ -26,6 +27,8 @@ namespace ConsoleApplication1
 
                 }
                 b.Save(@"C:\tutorials\blank_640_480.png");
+                
+            
                 
                 
                 int LiczbaNieBiałych =0;
@@ -44,6 +47,7 @@ namespace ConsoleApplication1
                 Console.WriteLine("Liczba nie białych pixeli jest równa " + LiczbaNieBiałych);
                 
             }
+            
         }
     }
 }
