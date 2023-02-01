@@ -11,7 +11,8 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            Figura.StwórzObraz(@"C:\tutorials\blank_640_480.png");
+            string ścieżka = @"C:\tutorials\inne.png";
+            Figura.StwórzObraz(ścieżka,800,100);
             using (Bitmap b = new Bitmap(640,480))
             {
                 using (Graphics g = Graphics.FromImage(b))
