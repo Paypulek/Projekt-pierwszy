@@ -1,29 +1,50 @@
-﻿using System;
-using System.Text;
-namespace Wyszukiwarka
+﻿// For Directory.GetFiles and Directory.GetDirectories
+// For File.Exists, Directory.Exists
+using System;
+using System.IO;
+using System.Collections;
+
+public class RecursiveFileProcessor
 {
-    class Program
+    public static void Main(string[] args)
     {
-        static void Main(string[] args)
+        foreach(string path in args)
         {
-            Console.WriteLine("Podaj zdanie a poszukam ile razy wystepuje tam literka \"a\"");
-            string zdanie = Console.ReadLine()!;
-            int dlugosc = zdanie.Length;
-            
-            
-              int ppow = 0;
-            for(int a = 0; a< dlugosc; a++)
+            if(File.Exists(path))
             {
-                if(zdanie[a]== 'a')
-                ppow++;
-                
-
-
+                // This path is a file
+                ProcessFile(path);
             }
-            Console.WriteLine("Literka a wystapila {0}", ppow ,"razy");
-
-
+            else if(Directory.Exists(path))
+            {
+                // This path is a directory
+                ProcessDirectory(path);
+            }
+            else
+            {
+                Console.WriteLine("{0} is not a valid file or directory.", path);
+            }
         }
- 
+    }
+
+    // Process all files in the directory passed in, recurse on any directories
+    // that are found, and process the files they contain.
+    public static void ProcessDirectory(string targetDirectory)
+    {
+        // Process the list of files found in the directory.
+        string [] fileEntries = Directory.GetFiles(targetDirectory);
+        foreach(string fileName in fileEntries)
+            ProcessFile(fileName);
+
+        // Recurse into subdirectories of this directory.
+        string [] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
+        foreach(string subdirectory in subdirectoryEntries)
+            ProcessDirectory(subdirectory);
+    }
+
+    // Insert logic for processing found files here.
+    public static void ProcessFile(string path)
+    {
+        Console.WriteLine("Processed file '{0}'.", path);	
     }
 }
