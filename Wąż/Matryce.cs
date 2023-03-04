@@ -13,6 +13,7 @@ public static class Ekran
 
     public static void RuchPotwora(ConsoleKey klawisz)
     {
+        
         switch (klawisz)
         {
             case ConsoleKey.UpArrow:
