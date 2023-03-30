@@ -10,6 +10,7 @@ public static class Program
     {
         var przerwaTykniecia = TimeSpan.FromMilliseconds(100);
         var wazGra = new WążGra();
+        Console.ReadKey();
 
         using (var cts = new CancellationTokenSource()) //przerwanie wykonywania zadania
         {

@@ -6,24 +6,27 @@ public static class Program
     public static void Main()
     {
 
+
+
         MenuWyboru.wyświetl();
         var key = Console.ReadKey();
         MenuWyboru.WykonajKomende(key.Key);
-        MenuWyboru.wyświetl();
+
     }
 }
 public static class MenuWyboru
 {
+    public static bool gameOver = false;
     public static LiczbaGraczy ileGraczy;
     public static void wyświetl()
     {
         Console.Clear();
-        Console.SetCursorPosition(5, 5);
+        Console.SetCursorPosition(20, 10);
         if (ileGraczy == LiczbaGraczy.JedenGracz)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Jeden Gracz");
-            Console.SetCursorPosition(5, 6);
+            Console.SetCursorPosition(20, 11);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Dwoch Graczy");
         }
@@ -31,7 +34,7 @@ public static class MenuWyboru
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Jeden Gracz");
-            Console.SetCursorPosition(5, 6);
+            Console.SetCursorPosition(20, 6);
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Dwoch Graczy");
         }
@@ -48,6 +51,13 @@ public static class MenuWyboru
                 ileGraczy--;
                 break;
             case ConsoleKey.Enter:
+            Console.CursorVisible=false;
+                Gra pierwsza = new Gra();
+                pierwsza.PetlaGry();
+                break;
+            case ConsoleKey.Escape:
+                MenuWyboru.gameOver = true;
+                break;
 
 
             default:
@@ -81,16 +91,101 @@ public struct Pozycja
 
 
 
-public class Gra : IWyswietlanie
+public class Gra
 {
-    public void wyswietlRamki(int góra, int lewo)
+
+    public Kierunek kierunekWeza;
+    public Kierunek _kierunekWeza = Kierunek.Góra;
+    public bool GameOver = false;
+    public Snake waz = new Snake(new Pozycja(10,10),1);
+    private int numerGry { get; }
+    public Gra()
     {
-        
+        liczbaGier++;
+    }
+    private static int liczbaGier = 0;
+
+     private static Kierunek RuchWSiebie(Kierunek direction)
+    {
+        switch (direction)
+        {
+            case Kierunek.Góra: return Kierunek.Dół;
+            case Kierunek.Lewo: return Kierunek.Prawo;
+            case Kierunek.Prawo: return Kierunek.Lewo;
+            case Kierunek.Dół: return Kierunek.Góra;
+            default: throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    public void zmianaKierunku(ConsoleKey key)
+    {
+        switch(key)
+        {
+            case ConsoleKey.UpArrow:
+            kierunekWeza = Kierunek.Góra;
+            break;
+            case ConsoleKey.DownArrow:
+            kierunekWeza = Kierunek.Dół;
+            break;
+            case ConsoleKey.LeftArrow:
+            kierunekWeza = Kierunek.Lewo;
+            break;
+            case ConsoleKey.RightArrow:
+            kierunekWeza = Kierunek.Prawo;
+            break;
+            default:
+            return;
+        }
+
+        if (kierunekWeza == RuchWSiebie(_kierunekWeza))
+        {
+            return;
+        }
+
+        _kierunekWeza=kierunekWeza;
+    }
+    public void PetlaGry()
+    {
+        do
+        {
+            var keyInfo=Console.ReadKey(true);
+            while (Console.KeyAvailable==false)
+            {
+            
+        Console.Clear();
+        this.wyswietlRamki(30,15);
+        waz.wyswietl();
+        waz.Ruch(_kierunekWeza);
+        this.zmianaKierunku(keyInfo.Key);
+        Thread.Sleep(250);
+            }
+
+
+        } while (!GameOver);
+    }
+    public void wyswietlRamki(int lewo, int gora)
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        for (int i = 0; i <= lewo; i++)
+        {
+            if (i <= gora)
+            {
+                Console.SetCursorPosition(0, i);
+                Console.Write("*");
+                Console.SetCursorPosition(lewo, i);
+                Console.Write("*");
+            }
+            Console.SetCursorPosition(i, 0);
+            Console.Write("*");
+            Console.SetCursorPosition(i, gora);
+            Console.Write("*");
+        }
+        Console.ReadKey();
     }
 
 }
 
-enum Kierunek
+public enum Kierunek
 {
     Góra,
     Dół,
@@ -113,6 +208,11 @@ public class Snake : IWyswietlanie
     }
     private Pozycja Głowa => ciało.First();
 
+    private static bool PozycjaZla(Pozycja pozycja) =>
+    pozycja.Góra>=0&&pozycja.Lewo>=0&&pozycja.Góra<=15&&pozycja.Lewo<=30;
+
+
+
     public void Ruch(Kierunek kierunek)
     {
         if (Śmierć) throw new InvalidOperationException();
@@ -122,12 +222,43 @@ public class Snake : IWyswietlanie
             case Kierunek.Dół:
                 kolejnaPozycja = Głowa.wDólO(1);
                 break;
+                case Kierunek.Góra:
+                 kolejnaPozycja = Głowa.wDólO(-1);
+                break;
+                case Kierunek.Lewo:
+                kolejnaPozycja = Głowa.wPrawoO(-1);
+                break;
+                case Kierunek.Prawo:
+                kolejnaPozycja = Głowa.wPrawoO(1);
+                break;
+                default:
+                throw new ArgumentOutOfRangeException();
         }
+                
+                if (ciało.Contains(kolejnaPozycja)||!PozycjaZla(kolejnaPozycja))
+        {
+            Śmierć = true;
+            return;
+        }
+
+        ciało.Insert(0, kolejnaPozycja);
+
+        if (Długosc > 0)
+        {
+            Długosc--;
+        }
+        else
+        {
+            ciało.RemoveAt(ciało.Count - 1);
+        }
+
+        
 
     }
 
     public void wyswietl()
     {
+        Console.ForegroundColor = ConsoleColor.Blue;
         Console.SetCursorPosition(Głowa.Lewo, Głowa.Góra);
         Console.Write("◉");
 
