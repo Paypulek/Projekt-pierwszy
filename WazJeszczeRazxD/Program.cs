@@ -51,9 +51,12 @@ public static class MenuWyboru
                 ileGraczy--;
                 break;
             case ConsoleKey.Enter:
-            Console.CursorVisible=false;
+                Console.CursorVisible = false;
                 Gra pierwsza = new Gra();
-                pierwsza.PetlaGry();
+                Thread t = new Thread(pierwsza.WyświetlGre);
+                Thread t1 = new Thread(pierwsza.AktualizacjaGry);
+                t.Start();
+                t1.Start();
                 break;
             case ConsoleKey.Escape:
                 MenuWyboru.gameOver = true;
@@ -89,6 +92,30 @@ public struct Pozycja
 
 }
 
+public class Jabłko : IWyswietlanie
+{
+    public Pozycja MiejsceJablka;
+    public Jabłko()
+    {
+        Random gen = new Random();
+        Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(30));
+        MiejsceJablka = zwróć;
+    }
+
+    public void wyswietl()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(MiejsceJablka.Lewo, MiejsceJablka.Góra);
+        Console.Write("x");
+    }
+
+    public void losujPozycje()
+    {
+        Random gen = new Random();
+        Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(30));
+        this.MiejsceJablka = zwróć;
+    }
+}
 
 
 public class Gra
@@ -97,15 +124,32 @@ public class Gra
     public Kierunek kierunekWeza;
     public Kierunek _kierunekWeza = Kierunek.Góra;
     public bool GameOver = false;
-    public Snake waz = new Snake(new Pozycja(10,10),1);
+    public Snake waz = new Snake(new Pozycja(10, 10), 1);
     private int numerGry { get; }
+
+    private Jabłko nagroda = new Jabłko();
     public Gra()
     {
         liczbaGier++;
     }
     private static int liczbaGier = 0;
 
-     private static Kierunek RuchWSiebie(Kierunek direction)
+    public void odpalGre()
+    {
+        this.WyświetlGre();
+        this.AktualizacjaGry();
+    }
+
+    public void CzyZjadłNagrode()
+    {
+        if (waz.Głowa.Equals(nagroda.MiejsceJablka))
+        {
+            nagroda.losujPozycje();
+            waz.Rosnij();
+        }
+    }
+
+    private static Kierunek RuchWSiebie(Kierunek direction)
     {
         switch (direction)
         {
@@ -119,22 +163,22 @@ public class Gra
 
     public void zmianaKierunku(ConsoleKey key)
     {
-        switch(key)
+        switch (key)
         {
             case ConsoleKey.UpArrow:
-            kierunekWeza = Kierunek.Góra;
-            break;
+                kierunekWeza = Kierunek.Góra;
+                break;
             case ConsoleKey.DownArrow:
-            kierunekWeza = Kierunek.Dół;
-            break;
+                kierunekWeza = Kierunek.Dół;
+                break;
             case ConsoleKey.LeftArrow:
-            kierunekWeza = Kierunek.Lewo;
-            break;
+                kierunekWeza = Kierunek.Lewo;
+                break;
             case ConsoleKey.RightArrow:
-            kierunekWeza = Kierunek.Prawo;
-            break;
+                kierunekWeza = Kierunek.Prawo;
+                break;
             default:
-            return;
+                return;
         }
 
         if (kierunekWeza == RuchWSiebie(_kierunekWeza))
@@ -142,22 +186,31 @@ public class Gra
             return;
         }
 
-        _kierunekWeza=kierunekWeza;
+        _kierunekWeza = kierunekWeza;
     }
-    public void PetlaGry()
+
+    public void WyświetlGre()
     {
         do
         {
-            var keyInfo=Console.ReadKey(true);
-            while (Console.KeyAvailable==false)
-            {
-            
         Console.Clear();
-        this.wyswietlRamki(30,15);
+        this.wyswietlRamki(30, 15);
         waz.wyswietl();
-        waz.Ruch(_kierunekWeza);
-        this.zmianaKierunku(keyInfo.Key);
-        Thread.Sleep(250);
+        nagroda.wyswietl();
+        Thread.Sleep(10);
+        }while(!GameOver);
+    }
+    public void AktualizacjaGry()
+    {
+        do
+        {
+            var keyInfo = Console.ReadKey(true);
+            while (Console.KeyAvailable == false)
+            {
+                waz.Ruch(_kierunekWeza);
+                this.CzyZjadłNagrode();
+                this.zmianaKierunku(keyInfo.Key);
+                Thread.Sleep(250);
             }
 
 
@@ -180,7 +233,6 @@ public class Gra
             Console.SetCursorPosition(i, gora);
             Console.Write("*");
         }
-        Console.ReadKey();
     }
 
 }
@@ -206,11 +258,15 @@ public class Snake : IWyswietlanie
         Długosc = Math.Max(0, poczatkowaDlugosc);
         Śmierć = false;
     }
-    private Pozycja Głowa => ciało.First();
+    public Pozycja Głowa => ciało.First();
 
     private static bool PozycjaZla(Pozycja pozycja) =>
-    pozycja.Góra>=0&&pozycja.Lewo>=0&&pozycja.Góra<=15&&pozycja.Lewo<=30;
+    pozycja.Góra >= 0 && pozycja.Lewo >= 0 && pozycja.Góra <= 15 && pozycja.Lewo <= 30;
 
+    public void Rosnij()
+    {
+        Długosc++;
+    }
 
 
     public void Ruch(Kierunek kierunek)
@@ -222,20 +278,20 @@ public class Snake : IWyswietlanie
             case Kierunek.Dół:
                 kolejnaPozycja = Głowa.wDólO(1);
                 break;
-                case Kierunek.Góra:
-                 kolejnaPozycja = Głowa.wDólO(-1);
+            case Kierunek.Góra:
+                kolejnaPozycja = Głowa.wDólO(-1);
                 break;
-                case Kierunek.Lewo:
+            case Kierunek.Lewo:
                 kolejnaPozycja = Głowa.wPrawoO(-1);
                 break;
-                case Kierunek.Prawo:
+            case Kierunek.Prawo:
                 kolejnaPozycja = Głowa.wPrawoO(1);
                 break;
-                default:
+            default:
                 throw new ArgumentOutOfRangeException();
         }
-                
-                if (ciało.Contains(kolejnaPozycja)||!PozycjaZla(kolejnaPozycja))
+
+        if (ciało.Contains(kolejnaPozycja) || !PozycjaZla(kolejnaPozycja))
         {
             Śmierć = true;
             return;
@@ -252,7 +308,7 @@ public class Snake : IWyswietlanie
             ciało.RemoveAt(ciało.Count - 1);
         }
 
-        
+
 
     }
 
