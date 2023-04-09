@@ -53,10 +53,7 @@ public static class MenuWyboru
             case ConsoleKey.Enter:
                 Console.CursorVisible = false;
                 Gra pierwsza = new Gra();
-                Thread t = new Thread(pierwsza.WyświetlGre);
-                Thread t1 = new Thread(pierwsza.AktualizacjaGry);
-                t.Start();
-                t1.Start();
+                pierwsza.odpalGre();
                 break;
             case ConsoleKey.Escape:
                 MenuWyboru.gameOver = true;
@@ -120,24 +117,30 @@ public class Jabłko : IWyswietlanie
 
 public class Gra
 {
-
+    private static int liczbaGier = 0;
     public Kierunek kierunekWeza;
     public Kierunek _kierunekWeza = Kierunek.Góra;
     public bool GameOver = false;
     public Snake waz = new Snake(new Pozycja(10, 10), 1);
-    private int numerGry { get; }
+    public int numerGry { get; }
+
+    public double Tempo=250;
+    
+    public void Szybciej(double n) => Tempo/=n ;
 
     private Jabłko nagroda = new Jabłko();
     public Gra()
     {
+        numerGry = liczbaGier;
         liczbaGier++;
     }
-    private static int liczbaGier = 0;
 
     public void odpalGre()
     {
-        this.WyświetlGre();
-        this.AktualizacjaGry();
+        Thread t = new Thread(this.WyświetlGre);
+        Thread t1 = new Thread(this.AktualizacjaGry);
+        t.Start();
+        t1.Start();
     }
 
     public void CzyZjadłNagrode()
@@ -146,6 +149,7 @@ public class Gra
         {
             nagroda.losujPozycje();
             waz.Rosnij();
+            this.Szybciej(1.3);
         }
     }
 
@@ -193,12 +197,12 @@ public class Gra
     {
         do
         {
-        Console.Clear();
-        this.wyswietlRamki(30, 15);
-        waz.wyswietl();
-        nagroda.wyswietl();
-        Thread.Sleep(10);
-        }while(!GameOver);
+            Console.Clear();
+            this.wyswietlRamki();
+            waz.wyswietl();
+            nagroda.wyswietl();
+            Thread.Sleep(10);
+        } while (!GameOver);
     }
     public void AktualizacjaGry()
     {
@@ -210,16 +214,18 @@ public class Gra
                 waz.Ruch(_kierunekWeza);
                 this.CzyZjadłNagrode();
                 this.zmianaKierunku(keyInfo.Key);
-                Thread.Sleep(250);
+                Thread.Sleep((int)Tempo);
             }
 
 
         } while (!GameOver);
     }
-    public void wyswietlRamki(int lewo, int gora)
+    public void wyswietlRamki()
     {
+        int gora = 15;
+        int lewo = 30 + (60 * numerGry);
         Console.ForegroundColor = ConsoleColor.Green;
-        for (int i = 0; i <= lewo; i++)
+        for (int i = 0 + (60 * numerGry); i <= lewo; i++)
         {
             if (i <= gora)
             {
