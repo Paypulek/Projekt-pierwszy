@@ -14,8 +14,8 @@ public static class Program
 }
 public static class MenuWyboru
 {
-    public static int przesuniecie =60;
-    public static int bezprzesuniecia =0;
+    public static int przesuniecie = 60;
+    public static int bezprzesuniecia = 0;
     public static bool gameOver = false;
     public static LiczbaGraczy ileGraczy;
     public static void wyświetl()
@@ -52,10 +52,10 @@ public static class MenuWyboru
                 break;
             case ConsoleKey.Enter:
                 Console.CursorVisible = false;
-                Gra pierwsza = new Gra(przesuniecie);
-               // Gra druga = new Gra();
+                Gra pierwsza = new Gra(10);
+                // Gra druga = new Gra();
                 pierwsza.odpalGre();
-               // druga.odpalGre();
+                // druga.odpalGre();
                 break;
             case ConsoleKey.Escape:
                 MenuWyboru.gameOver = true;
@@ -96,24 +96,28 @@ public class Gra
     public Kierunek kierunekWeza;
     public Kierunek _kierunekWeza = Kierunek.Góra;
     public bool GameOver = false;
+    public static int x;
     public Snake waz;
-    public int zmiennikPrzesuniecia ;
+    public int zmiennikPrzesuniecia;
 
     public double Tempo = 250;
 
     public void Szybciej(double n) => Tempo /= n;
 
     private Jabłko nagroda;
-    public Gra(int x)
+    public Gra()
+    {}
+    public Gra(int zmienna)
     {
-        zmiennikPrzesuniecia = x;
+        zmiennikPrzesuniecia = zmienna;
+        x++;
     }
 
     public void Inicjuj()
     {
-        waz = new Snake(new Pozycja(10, (10+zmiennikPrzesuniecia)), 1);
+        waz = new Snake(new Pozycja(10, (10 + zmiennikPrzesuniecia)), 1);
         nagroda = new Jabłko();
-        nagroda= new Jabłko();
+        nagroda.losujPozycje(zmiennikPrzesuniecia);
     }
 
     public void odpalGre()
@@ -129,7 +133,7 @@ public class Gra
     {
         if (waz.Głowa.Equals(nagroda.MiejsceJablka))
         {
-            nagroda.losujPozycje();
+            nagroda.losujPozycje(zmiennikPrzesuniecia);
             waz.Rosnij();
             this.Szybciej(1.3);
         }
@@ -216,127 +220,129 @@ public class Gra
                 Console.SetCursorPosition(lewo, i);
                 Console.Write("*");
             }
-            if (i>=zmiennikPrzesuniecia)
+            if (i >= zmiennikPrzesuniecia)
             {
-            Console.SetCursorPosition(i, 0);
-            Console.Write("*");
-            Console.SetCursorPosition(i, gora);
-            Console.Write("*");
+                Console.SetCursorPosition(i, 0);
+                Console.Write("*");
+                Console.SetCursorPosition(i, gora);
+                Console.Write("*");
             }
         }
     }
-        public class Jabłko : Gra
+}
+public class Jabłko : Gra
+{
+    public Pozycja MiejsceJablka;
+    public Jabłko()
     {
-        public Pozycja MiejsceJablka;
-        public Jabłko()
-        {
-        }
-
-        public void wyswietl()
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition(MiejsceJablka.Lewo, MiejsceJablka.Góra);
-            Console.Write("x" + zmiennikPrzesuniecia);
-        }
-
-        public void losujPozycje()
-        {
-            Random gen = new Random();
-            Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(zmiennikPrzesuniecia,30+zmiennikPrzesuniecia));
-            this.MiejsceJablka = zwróć;
-        }
-    }
-    public class Snake : Gra
-    {
-
-        private List<Pozycja> ciało;
-        private int Długosc;
-        public bool Śmierć;
-
-
-        public Snake(Pozycja pozycjaPoczatkowa, int poczatkowaDlugosc)
-        {
-
-            ciało = new List<Pozycja> { pozycjaPoczatkowa };
-            Długosc = Math.Max(0, poczatkowaDlugosc);
-            Śmierć = false;
-        }
-        public Pozycja Głowa => ciało.First();
-
-        private bool PozycjaZla(Pozycja pozycja) =>
-        pozycja.Góra >= 0 && pozycja.Lewo >= (0 + zmiennikPrzesuniecia) && pozycja.Góra <= 15 && pozycja.Lewo <= (30 + zmiennikPrzesuniecia);
-
-        public void Rosnij()
-        {
-            Długosc++;
-        }
-
-
-        public void Ruch(Kierunek kierunek)
-        {
-            if (Śmierć) throw new InvalidOperationException();
-            Pozycja kolejnaPozycja;
-            switch (kierunek)
-            {
-                case Kierunek.Dół:
-                    kolejnaPozycja = Głowa.wDólO(1);
-                    break;
-                case Kierunek.Góra:
-                    kolejnaPozycja = Głowa.wDólO(-1);
-                    break;
-                case Kierunek.Lewo:
-                    kolejnaPozycja = Głowa.wPrawoO(-1);
-                    break;
-                case Kierunek.Prawo:
-                    kolejnaPozycja = Głowa.wPrawoO(1);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            if (ciało.Contains(kolejnaPozycja) || !PozycjaZla(kolejnaPozycja))
-            {
-                Śmierć = true;
-                return;
-            }
-
-            ciało.Insert(0, kolejnaPozycja);
-
-            if (Długosc > 0)
-            {
-                Długosc--;
-            }
-            else
-            {
-                ciało.RemoveAt(ciało.Count - 1);
-            }
-        }
-        public void wyswietl()
-        {
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.SetCursorPosition(Głowa.Lewo, Głowa.Góra);
-            Console.Write("◉");
-
-            foreach (var position in ciało)
-            {
-                Console.SetCursorPosition(position.Lewo, position.Góra);
-                Console.Write("■");
-            }
-
-        }
-
     }
 
-    public enum Kierunek
+    public void wyswietl()
     {
-        Góra,
-        Dół,
-        Prawo,
-        Lewo
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(MiejsceJablka.Lewo, MiejsceJablka.Góra);
+        Console.Write("x" +  "  x:" + x + " przes:" + zmiennikPrzesuniecia);
+    }
+
+    public void losujPozycje(int przesuniecie)
+    {
+        Random gen = new Random();
+        Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(przesuniecie, (30 + przesuniecie)));
+        this.MiejsceJablka = zwróć;
+    }
+}
+
+public class Snake : Gra
+{
+
+    private List<Pozycja> ciało;
+    private int Długosc;
+    public bool Śmierć;
+
+
+    public Snake(Pozycja pozycjaPoczatkowa, int poczatkowaDlugosc)
+    {
+
+        ciało = new List<Pozycja> { pozycjaPoczatkowa };
+        Długosc = Math.Max(0, poczatkowaDlugosc);
+        Śmierć = false;
+    }
+    public Pozycja Głowa => ciało.First();
+
+    private bool PozycjaZla(Pozycja pozycja, int przesuniecie) =>
+    ((pozycja.Góra >= 0 && (pozycja.Lewo >= (0 + przesuniecie)) && pozycja.Góra <= 15 && (pozycja.Lewo <= (30 + przesuniecie))));
+
+    public void Rosnij()
+    {
+        Długosc++;
+    }
+
+
+    public void Ruch(Kierunek kierunek)
+    {
+        if (Śmierć) throw new InvalidOperationException();
+        Pozycja kolejnaPozycja;
+        switch (kierunek)
+        {
+            case Kierunek.Dół:
+                kolejnaPozycja = Głowa.wDólO(1);
+                break;
+            case Kierunek.Góra:
+                kolejnaPozycja = Głowa.wDólO(-1);
+                break;
+            case Kierunek.Lewo:
+                kolejnaPozycja = Głowa.wPrawoO(-1);
+                break;
+            case Kierunek.Prawo:
+                kolejnaPozycja = Głowa.wPrawoO(1);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+
+        if (ciało.Contains(kolejnaPozycja) || !PozycjaZla(kolejnaPozycja,zmiennikPrzesuniecia))
+        {
+            Śmierć = true;
+            return;
+        }
+
+        ciało.Insert(0, kolejnaPozycja);
+
+        if (Długosc > 0)
+        {
+            Długosc--;
+        }
+        else
+        {
+            ciało.RemoveAt(ciało.Count - 1);
+        }
+    }
+    public void wyswietl()
+    {
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.SetCursorPosition(Głowa.Lewo, Głowa.Góra);
+        Console.Write("◉");
+
+        foreach (var position in ciało)
+        {
+            Console.SetCursorPosition(position.Lewo, position.Góra);
+            Console.Write("■");
+        }
 
     }
 
 }
+
+public enum Kierunek
+{
+    Góra,
+    Dół,
+    Prawo,
+    Lewo
+
+}
+
+
 
 interface IEkran
 {
