@@ -97,22 +97,30 @@ public class Gra
     public Kierunek _kierunekWeza = Kierunek.Góra;
     public bool GameOver = false;
     public Snake waz;
-    public int zmiennikPrzesuniecia;
+    public int zmiennikPrzesuniecia {get;}
 
     public double Tempo = 250;
+    public int temp;
 
     public void Szybciej(double n) => Tempo /= n;
 
-    private Jabłko nagroda = new Jabłko();
+    private Jabłko nagroda;
     public Gra()
     {
-        zmiennikPrzesuniecia = zmiennikGryLicznik;
-        waz = new Snake(new Pozycja(10, 10+zmiennikPrzesuniecia), 1);
+        temp=zmiennikGryLicznik;
+        zmiennikPrzesuniecia = 20;
         zmiennikGryLicznik+=60;
+    }
+
+    public void Inicjuj()
+    {
+        waz = new Snake(new Pozycja(10, (10+zmiennikPrzesuniecia)), 1);
+        nagroda = new Jabłko();
     }
 
     public void odpalGre()
     {
+        this.Inicjuj();
         Thread t = new Thread(this.WyświetlGre);
         Thread t1 = new Thread(this.AktualizacjaGry);
         t.Start();
@@ -177,7 +185,7 @@ public class Gra
             this.wyswietlRamki();
             waz.wyswietl();
             nagroda.wyswietl();
-            Thread.Sleep(10);
+            Thread.Sleep(100);
         } while (!GameOver);
     }
     public void AktualizacjaGry()
@@ -190,7 +198,7 @@ public class Gra
                 waz.Ruch(_kierunekWeza);
                 this.CzyZjadłNagrode();
                 this.zmianaKierunku(keyInfo.Key);
-                Thread.Sleep((int)Tempo);
+                Thread.Sleep(200);
             }
 
 
@@ -201,7 +209,7 @@ public class Gra
         int gora = 15;
         int lewo = 30 + zmiennikPrzesuniecia;
         Console.ForegroundColor = ConsoleColor.Green;
-        for (int i = 0 + zmiennikPrzesuniecia; i <= lewo; i++)
+        for (int i = 0; i <= lewo; i++)
         {
             if (i <= gora)
             {
@@ -210,10 +218,13 @@ public class Gra
                 Console.SetCursorPosition(lewo, i);
                 Console.Write("*");
             }
-            Console.SetCursorPosition(i, zmiennikPrzesuniecia);
+            if (i>=zmiennikPrzesuniecia)
+            {
+            Console.SetCursorPosition(i, 0);
             Console.Write("*");
             Console.SetCursorPosition(i, gora);
             Console.Write("*");
+            }
         }
     }
         public class Jabłko : Gra
@@ -222,7 +233,7 @@ public class Gra
         public Jabłko()
         {
             Random gen = new Random();
-            Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(30+zmiennikPrzesuniecia));
+            Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(zmiennikPrzesuniecia,30+zmiennikPrzesuniecia));
             MiejsceJablka = zwróć;
         }
 
@@ -230,13 +241,13 @@ public class Gra
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(MiejsceJablka.Lewo, MiejsceJablka.Góra);
-            Console.Write("x");
+            Console.Write("x" + zmiennikPrzesuniecia+"   "+ Gra.zmiennikGryLicznik +"    temp:"+ base.temp);
         }
 
         public void losujPozycje()
         {
             Random gen = new Random();
-            Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(30+zmiennikPrzesuniecia));
+            Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(zmiennikPrzesuniecia,30+zmiennikPrzesuniecia));
             this.MiejsceJablka = zwróć;
         }
     }
