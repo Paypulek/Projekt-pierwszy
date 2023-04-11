@@ -6,7 +6,6 @@ public static class Program
     public static void Main()
     {
 
-
         MenuWyboru.wyświetl();
         var key = Console.ReadKey();
         MenuWyboru.WykonajKomende(key.Key);
@@ -15,6 +14,8 @@ public static class Program
 }
 public static class MenuWyboru
 {
+    public static int przesuniecie =60;
+    public static int bezprzesuniecia =0;
     public static bool gameOver = false;
     public static LiczbaGraczy ileGraczy;
     public static void wyświetl()
@@ -51,7 +52,7 @@ public static class MenuWyboru
                 break;
             case ConsoleKey.Enter:
                 Console.CursorVisible = false;
-                Gra pierwsza = new Gra();
+                Gra pierwsza = new Gra(przesuniecie);
                // Gra druga = new Gra();
                 pierwsza.odpalGre();
                // druga.odpalGre();
@@ -92,30 +93,27 @@ public struct Pozycja
 
 public class Gra
 {
-    public static int zmiennikGryLicznik;
     public Kierunek kierunekWeza;
     public Kierunek _kierunekWeza = Kierunek.Góra;
     public bool GameOver = false;
     public Snake waz;
-    public int zmiennikPrzesuniecia {get;}
+    public int zmiennikPrzesuniecia ;
 
     public double Tempo = 250;
-    public int temp;
 
     public void Szybciej(double n) => Tempo /= n;
 
     private Jabłko nagroda;
-    public Gra()
+    public Gra(int x)
     {
-        temp=zmiennikGryLicznik;
-        zmiennikPrzesuniecia = 20;
-        zmiennikGryLicznik+=60;
+        zmiennikPrzesuniecia = x;
     }
 
     public void Inicjuj()
     {
         waz = new Snake(new Pozycja(10, (10+zmiennikPrzesuniecia)), 1);
         nagroda = new Jabłko();
+        nagroda= new Jabłko();
     }
 
     public void odpalGre()
@@ -232,16 +230,13 @@ public class Gra
         public Pozycja MiejsceJablka;
         public Jabłko()
         {
-            Random gen = new Random();
-            Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(zmiennikPrzesuniecia,30+zmiennikPrzesuniecia));
-            MiejsceJablka = zwróć;
         }
 
         public void wyswietl()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(MiejsceJablka.Lewo, MiejsceJablka.Góra);
-            Console.Write("x" + zmiennikPrzesuniecia+"   "+ Gra.zmiennikGryLicznik +"    temp:"+ base.temp);
+            Console.Write("x" + zmiennikPrzesuniecia);
         }
 
         public void losujPozycje()
