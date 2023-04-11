@@ -52,10 +52,10 @@ public static class MenuWyboru
                 break;
             case ConsoleKey.Enter:
                 Console.CursorVisible = false;
-                Gra pierwsza = new Gra(10);
-                // Gra druga = new Gra();
+                Gra pierwsza = new Gra(0);
+                 Gra druga = new Gra(60);
                 pierwsza.odpalGre();
-                // druga.odpalGre();
+                 druga.odpalGre();
                 break;
             case ConsoleKey.Escape:
                 MenuWyboru.gameOver = true;
@@ -115,8 +115,8 @@ public class Gra
 
     public void Inicjuj()
     {
-        waz = new Snake(new Pozycja(10, (10 + zmiennikPrzesuniecia)), 1);
-        nagroda = new Jabłko();
+        waz = new Snake(new Pozycja(10, (10 + zmiennikPrzesuniecia)), 1,zmiennikPrzesuniecia);
+        nagroda = new Jabłko(zmiennikPrzesuniecia);
         nagroda.losujPozycje(zmiennikPrzesuniecia);
     }
 
@@ -230,18 +230,20 @@ public class Gra
         }
     }
 }
-public class Jabłko : Gra
+public class Jabłko
 {
     public Pozycja MiejsceJablka;
-    public Jabłko()
+    public int przesuniecie;
+    public Jabłko(int Przesuniecie)
     {
+        przesuniecie=Przesuniecie;
     }
 
     public void wyswietl()
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.SetCursorPosition(MiejsceJablka.Lewo, MiejsceJablka.Góra);
-        Console.Write("x" +  "  x:" + x + " przes:" + zmiennikPrzesuniecia);
+        Console.Write("x" +  "  x:" + Gra.x + " przes:" + przesuniecie);
     }
 
     public void losujPozycje(int przesuniecie)
@@ -252,16 +254,18 @@ public class Jabłko : Gra
     }
 }
 
-public class Snake : Gra
+public class Snake 
 {
 
     private List<Pozycja> ciało;
     private int Długosc;
     public bool Śmierć;
+    public int przesuniecie;
 
 
-    public Snake(Pozycja pozycjaPoczatkowa, int poczatkowaDlugosc)
+    public Snake(Pozycja pozycjaPoczatkowa, int poczatkowaDlugosc,int Przesuniecie)
     {
+        przesuniecie=Przesuniecie;
 
         ciało = new List<Pozycja> { pozycjaPoczatkowa };
         Długosc = Math.Max(0, poczatkowaDlugosc);
@@ -269,7 +273,7 @@ public class Snake : Gra
     }
     public Pozycja Głowa => ciało.First();
 
-    private bool PozycjaZla(Pozycja pozycja, int przesuniecie) =>
+    private bool PozycjaZla(Pozycja pozycja) =>
     ((pozycja.Góra >= 0 && (pozycja.Lewo >= (0 + przesuniecie)) && pozycja.Góra <= 15 && (pozycja.Lewo <= (30 + przesuniecie))));
 
     public void Rosnij()
@@ -300,7 +304,7 @@ public class Snake : Gra
                 throw new ArgumentOutOfRangeException();
         }
 
-        if (ciało.Contains(kolejnaPozycja) || !PozycjaZla(kolejnaPozycja,zmiennikPrzesuniecia))
+        if (ciało.Contains(kolejnaPozycja) || !PozycjaZla(kolejnaPozycja))
         {
             Śmierć = true;
             return;
