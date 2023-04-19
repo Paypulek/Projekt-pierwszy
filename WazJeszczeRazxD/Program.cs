@@ -52,10 +52,17 @@ public static class MenuWyboru
                 break;
             case ConsoleKey.Enter:
                 Console.CursorVisible = false;
+                if (ileGraczy==LiczbaGraczy.JedenGracz)
+                {
                 Gra pierwsza = new Gra(0);
-                 Gra druga = new Gra(60);
-                pierwsza.odpalGre();
-                 druga.odpalGre();
+                pierwsza.odpalGreDlaJednego();
+                }
+                else
+                {
+                    Gra pierwsza = new Gra(0);
+                    Gra druga = new Gra(60);
+                    
+                }
                 break;
             case ConsoleKey.Escape:
                 MenuWyboru.gameOver = true;
@@ -120,7 +127,7 @@ public class Gra
         nagroda.losujPozycje(zmiennikPrzesuniecia);
     }
 
-    public void odpalGre()
+    public void odpalGreDlaJednego()
     {
         this.Inicjuj();
         Thread t = new Thread(this.WyświetlGre);
