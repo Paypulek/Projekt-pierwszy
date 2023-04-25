@@ -55,23 +55,31 @@ public static class MenuWyboru
                 break;
             case ConsoleKey.Enter:
                 Console.CursorVisible = false;
-             //   if (ileGraczy == LiczbaGraczy.JedenGracz)
-              //  {
+                //   if (ileGraczy == LiczbaGraczy.JedenGracz)
+                //  {
 
-              //      pierwszaGra.odpalGre();
-             //   }
-             //   else
-             //   {
-                    Thread wyswietlanie = new Thread(StanAplikacji.WyświetlDwieGry);
-                    Thread sterowanie = new Thread(StanAplikacji.przekażDoGry);
-                    Thread aktualizacja1 = new Thread(MenuWyboru.pierwszaGra.AktualizacjaGry);
-                    Thread aktualizacja2 = new Thread(MenuWyboru.drugaGra.AktualizacjaGry);
+                //      pierwszaGra.odpalGre();
+                //   }
+                //   else
+                //   {
+                  //    Thread wyswietlanie = new Thread(StanAplikacji.WyświetlDwieGry);
+                      Thread sterowanie = new Thread(StanAplikacji.przekażGuzik);
+                  //    Thread aktualizacja1 = new Thread(MenuWyboru.pierwszaGra.AktualizacjaGry);
+                  //    Thread aktualizacja2 = new Thread(MenuWyboru.drugaGra.AktualizacjaGry);
 
-                    sterowanie.Start();
-                    aktualizacja1.Start();
-                   aktualizacja2.Start();
-                    wyswietlanie.Start();
-               // }
+                      sterowanie.Start();
+                 //     aktualizacja1.Start();
+                 //    aktualizacja2.Start();
+                 //     wyswietlanie.Start();
+                // }
+
+                while (!MenuWyboru.gameOver)
+                {
+                    Console.Clear();
+                    StanAplikacji.WyświetlDwieGry();
+                    MenuWyboru.pierwszaGra.AktualizacjaGry();
+                    MenuWyboru.drugaGra.AktualizacjaGry();
+                }
                 break;
             case ConsoleKey.Escape:
                 MenuWyboru.gameOver = true;
@@ -91,7 +99,7 @@ public enum LiczbaGraczy
     DwochGraczy
 }
 
-public class StanAplikacji
+public static class StanAplikacji
 {
     public static ConsoleKeyInfo klawiszOgólny = new ConsoleKeyInfo();
     public static ConsoleKey klawiszGracza1 = new ConsoleKey();
@@ -99,14 +107,24 @@ public class StanAplikacji
 
     public static void WyświetlDwieGry()
     {
-        while (!MenuWyboru.gameOver)
+        // while (!MenuWyboru.gameOver)
         {
             MenuWyboru.pierwszaGra.WyświetlGre();
             MenuWyboru.drugaGra.WyświetlGre();
-          Thread.Sleep(100);
+            StanAplikacji.WyswietlPunkty();
+            Thread.Sleep(10);
+            //  }
         }
     }
-    public static void przekażDoGry()
+
+    public static void WyswietlPunkty()
+    {
+        Console.SetCursorPosition(40,5);
+        Console.Write("Dlugosc Lewaka:" + MenuWyboru.pierwszaGra.waz.liczbaPunktów );
+        Console.SetCursorPosition(40,6);
+        Console.Write("Dlugosc Prawaka:" + MenuWyboru.drugaGra.waz.liczbaPunktów);
+    }
+    public static void przekażGuzik()
     {
         while (!MenuWyboru.gameOver)
         {
@@ -150,6 +168,7 @@ public class StanAplikacji
 
 }
 
+
 public struct Pozycja
 {
     public int Lewo;
@@ -177,10 +196,10 @@ public class Gra
     public Snake waz;
     public int zmiennikPrzesuniecia;
 
-    public double Tempo = 250;
+    public double Tempo = 150;
 
     public void Szybciej(double n) => Tempo /= n;
-private Jabłko nagroda;
+    private Jabłko nagroda;
     public Gra(int przesuniecie)
     {
         key = ConsoleKey.UpArrow;
@@ -257,37 +276,39 @@ private Jabłko nagroda;
 
     public void WyświetlGre()
     {
-        do
-        {
-            Console.Clear();
-            this.wyswietlRamki();
-            waz.wyswietl();
-            nagroda.wyswietl();
-            Thread.Sleep(10);
-        } while (!GameOver);
+        // do
+        // {
+        //Console.Clear();
+        this.wyswietlRamki();
+        waz.wyswietl();
+        nagroda.wyswietl();
+
+        // } while (!GameOver);
     }
+
+    
     public void AktualizacjaGry()
     {
-        do
-        {
-            var keyInfo = Console.ReadKey(true);
-            while (Console.KeyAvailable == false)
-            {
-                waz.Ruch(_kierunekWeza);
-                this.CzyZjadłNagrode();
-                this.zmianaKierunku();
-                Thread.Sleep((int)Tempo);
-            }
+        // do
+        //  {
+        // var keyInfo = Console.ReadKey(true);
+        // while (Console.KeyAvailable == false)
+        // {
+        waz.Ruch(_kierunekWeza);
+        this.CzyZjadłNagrode();
+        this.zmianaKierunku();
+        Thread.Sleep((int)Tempo);
+        // }
 
 
-        } while (!GameOver);
+        // } while (!GameOver);
     }
     public void wyswietlRamki()
     {
         int gora = 15;
         int lewo = 30 + zmiennikPrzesuniecia;
         Console.ForegroundColor = ConsoleColor.Green;
-        for (int i = 0 + zmiennikPrzesuniecia; i <= lewo; i++)
+        for (int i = 0 ; i <= lewo; i++)
         {
             if (i <= gora)
             {
@@ -296,7 +317,7 @@ private Jabłko nagroda;
                 Console.SetCursorPosition(lewo, i);
                 Console.Write("*");
             }
-            Console.SetCursorPosition(zmiennikPrzesuniecia,0);
+            Console.SetCursorPosition(i, 0);
             Console.Write("*");
             Console.SetCursorPosition(i, gora);
             Console.Write("*");
@@ -311,7 +332,7 @@ public class Jabłko
     {
         ZmiennikPrzesuniecia = zmiennikPrzesuniecia;
         Random gen = new Random();
-        Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(30 + zmiennikPrzesuniecia));
+        Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(ZmiennikPrzesuniecia, ZmiennikPrzesuniecia + 30));
         MiejsceJablka = zwróć;
     }
 
@@ -325,16 +346,17 @@ public class Jabłko
     public void losujPozycje()
     {
         Random gen = new Random();
-        Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(30 + ZmiennikPrzesuniecia));
+        Pozycja zwróć = new Pozycja(gen.Next(15), gen.Next(ZmiennikPrzesuniecia, ZmiennikPrzesuniecia + 30));
         this.MiejsceJablka = zwróć;
     }
 }
 public class Snake
 {
     int zmiennikPrzesuniecia;
+    public int liczbaPunktów;
 
     private List<Pozycja> ciało;
-    private int Długosc;
+    public int Długosc;
     public bool Śmierć;
 
 
@@ -353,6 +375,7 @@ public class Snake
     public void Rosnij()
     {
         Długosc++;
+        liczbaPunktów++;
     }
 
 
