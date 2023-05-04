@@ -62,22 +62,20 @@ public static class MenuWyboru
                 //   }
                 //   else
                 //   {
-                  //    Thread wyswietlanie = new Thread(StanAplikacji.WyświetlDwieGry);
-                      Thread sterowanie = new Thread(StanAplikacji.przekażGuzik);
-                  //    Thread aktualizacja1 = new Thread(MenuWyboru.pierwszaGra.AktualizacjaGry);
-                  //    Thread aktualizacja2 = new Thread(MenuWyboru.drugaGra.AktualizacjaGry);
+                Thread wyswietlanie = new Thread(StanAplikacji.WyświetlDwieGry);
+                Thread sterowanie = new Thread(StanAplikacji.przekażGuzik);
+                    Thread aktualizacja1 = new Thread(MenuWyboru.pierwszaGra.AktualizacjaGry);
+                //    Thread aktualizacja2 = new Thread(MenuWyboru.drugaGra.AktualizacjaGry);
 
-                      sterowanie.Start();
-                 //     aktualizacja1.Start();
-                 //    aktualizacja2.Start();
-                 //     wyswietlanie.Start();
+                sterowanie.Start();
+                     aktualizacja1.Start();
+                //    aktualizacja2.Start();
+                wyswietlanie.Start();
                 // }
 
                 while (!MenuWyboru.gameOver)
                 {
-                    Console.Clear();
-                    StanAplikacji.WyświetlDwieGry();
-                    MenuWyboru.pierwszaGra.AktualizacjaGry();
+                 //   MenuWyboru.pierwszaGra.AktualizacjaGry();
                     MenuWyboru.drugaGra.AktualizacjaGry();
                 }
                 break;
@@ -107,22 +105,31 @@ public static class StanAplikacji
 
     public static void WyświetlDwieGry()
     {
-        // while (!MenuWyboru.gameOver)
+        while (!MenuWyboru.gameOver)
         {
-            MenuWyboru.pierwszaGra.WyświetlGre();
-            MenuWyboru.drugaGra.WyświetlGre();
+            Console.Clear();
+            MenuWyboru.pierwszaGra.wyswietlRamki();
+            MenuWyboru.pierwszaGra.nagroda.wyswietl();
+            MenuWyboru.pierwszaGra.waz.wyswietl();
+            MenuWyboru.drugaGra.wyswietlRamki();
+            MenuWyboru.drugaGra.nagroda.wyswietl();
+            MenuWyboru.drugaGra.waz.wyswietl();
             StanAplikacji.WyswietlPunkty();
             Thread.Sleep(10);
-            //  }
+
         }
     }
 
     public static void WyswietlPunkty()
     {
-        Console.SetCursorPosition(40,5);
-        Console.Write("Dlugosc Lewaka:" + MenuWyboru.pierwszaGra.waz.liczbaPunktów );
-        Console.SetCursorPosition(40,6);
+        Console.SetCursorPosition(40, 5);
+        Console.Write("Dlugosc Lewaka:" + MenuWyboru.pierwszaGra.waz.liczbaPunktów);
+        Console.SetCursorPosition(40, 6);
         Console.Write("Dlugosc Prawaka:" + MenuWyboru.drugaGra.waz.liczbaPunktów);
+        Console.SetCursorPosition(40, 7);
+        Console.Write("Tempo 1 gracza :" + (int)MenuWyboru.pierwszaGra.Tempo);
+        Console.SetCursorPosition(40, 8);
+        Console.Write("Tempo 2 gracza :" + (int)MenuWyboru.drugaGra.Tempo);
     }
     public static void przekażGuzik()
     {
@@ -160,8 +167,8 @@ public static class StanAplikacji
                     break;
 
             }
-            MenuWyboru.pierwszaGra.PrzekażKlawiszDoGry(klawiszGracza1);
-            MenuWyboru.drugaGra.PrzekażKlawiszDoGry(klawiszGracza2);
+            MenuWyboru.pierwszaGra.PrzekażKlawiszDoGry(klawiszGracza2);
+            MenuWyboru.drugaGra.PrzekażKlawiszDoGry(klawiszGracza1);
         }
 
     }
@@ -196,10 +203,10 @@ public class Gra
     public Snake waz;
     public int zmiennikPrzesuniecia;
 
-    public double Tempo = 150;
+    public double Tempo = 350;
 
     public void Szybciej(double n) => Tempo /= n;
-    private Jabłko nagroda;
+    public Jabłko nagroda;
     public Gra(int przesuniecie)
     {
         key = ConsoleKey.UpArrow;
@@ -228,7 +235,10 @@ public class Gra
         {
             nagroda.losujPozycje();
             waz.Rosnij();
-            this.Szybciej(1.3);
+            if (this.zmiennikPrzesuniecia != 0)
+                MenuWyboru.pierwszaGra.Szybciej(1.05);
+            else
+                MenuWyboru.drugaGra.Szybciej(1.05);
         }
     }
 
@@ -278,7 +288,6 @@ public class Gra
     {
         // do
         // {
-        //Console.Clear();
         this.wyswietlRamki();
         waz.wyswietl();
         nagroda.wyswietl();
@@ -286,29 +295,29 @@ public class Gra
         // } while (!GameOver);
     }
 
-    
+
     public void AktualizacjaGry()
     {
-        // do
-        //  {
-        // var keyInfo = Console.ReadKey(true);
-        // while (Console.KeyAvailable == false)
-        // {
-        waz.Ruch(_kierunekWeza);
-        this.CzyZjadłNagrode();
-        this.zmianaKierunku();
-        Thread.Sleep((int)Tempo);
-        // }
+        do
+        {
+            
+            while (Console.KeyAvailable == false)
+            {
+                waz.Ruch(_kierunekWeza);
+                this.CzyZjadłNagrode();
+                this.zmianaKierunku();
+                Thread.Sleep((int)Tempo);
 
+            }
+        } while (!GameOver);
 
-        // } while (!GameOver);
     }
     public void wyswietlRamki()
     {
         int gora = 15;
         int lewo = 30 + zmiennikPrzesuniecia;
         Console.ForegroundColor = ConsoleColor.Green;
-        for (int i = 0 ; i <= lewo; i++)
+        for (int i = 0; i <= lewo; i++)
         {
             if (i <= gora)
             {
