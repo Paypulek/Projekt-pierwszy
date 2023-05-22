@@ -64,18 +64,18 @@ public static class MenuWyboru
                 //   {
                 Thread wyswietlanie = new Thread(StanAplikacji.WyświetlDwieGry);
                 Thread sterowanie = new Thread(StanAplikacji.przekażGuzik);
-                    Thread aktualizacja1 = new Thread(MenuWyboru.pierwszaGra.AktualizacjaGry);
+                Thread aktualizacja1 = new Thread(MenuWyboru.pierwszaGra.AktualizacjaGry);
                 //    Thread aktualizacja2 = new Thread(MenuWyboru.drugaGra.AktualizacjaGry);
 
                 sterowanie.Start();
-                     aktualizacja1.Start();
+                aktualizacja1.Start();
                 //    aktualizacja2.Start();
                 wyswietlanie.Start();
                 // }
 
                 while (!MenuWyboru.gameOver)
                 {
-                 //   MenuWyboru.pierwszaGra.AktualizacjaGry();
+                    //   MenuWyboru.pierwszaGra.AktualizacjaGry();
                     MenuWyboru.drugaGra.AktualizacjaGry();
                 }
                 break;
@@ -109,9 +109,9 @@ public static class StanAplikacji
         {
             Console.Clear();
             MenuWyboru.pierwszaGra.wyswietlRamki();
-            MenuWyboru.pierwszaGra.nagroda.wyswietl();
             MenuWyboru.pierwszaGra.waz.wyswietl();
             MenuWyboru.drugaGra.wyswietlRamki();
+            MenuWyboru.pierwszaGra.nagroda.wyswietl();
             MenuWyboru.drugaGra.nagroda.wyswietl();
             MenuWyboru.drugaGra.waz.wyswietl();
             StanAplikacji.WyswietlPunkty();
@@ -300,7 +300,7 @@ public class Gra
     {
         do
         {
-            
+
             while (Console.KeyAvailable == false)
             {
                 waz.Ruch(_kierunekWeza);
