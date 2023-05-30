@@ -36,9 +36,16 @@ connection.start().then(function () {
     return console.error(err.toString());
 });
 
+function powitanie()
+ {
+ var imie = prompt("Podaj imię");
+ alert("Witaj " + imie);
+ }
 
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
+    alert("Na spokojnie to wysyłej");
+    
     var user = document.getElementById("userInput").value;
     var message = document.getElementById("messageInput").value;
     connection.invoke("SendMessage", user, message).catch(function (err) {

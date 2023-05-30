@@ -13,7 +13,7 @@ namespace SignalRChat.Hubs
 
         public async Task DeleteMessage()
         {
-            await Clients.All.SendAsync("DeleteTable");
+            await Clients.All.SendAsync("powitanie");
         }
     }
 }
