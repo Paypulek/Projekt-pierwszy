@@ -33,6 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
 app.MapBlazorHub();
 app.MapHub<ChatHub>("/chathub");
 app.MapFallbackToPage("/_Host");

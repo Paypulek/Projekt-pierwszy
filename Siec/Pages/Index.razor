@@ -42,15 +42,18 @@
             .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
             .Build();
 
+        hubConnection.On<int, string>("AllMessage", (number, message) =>
+        {
+            var userPraise = $"{number}: ---  {message}";
+            messages.Add(userPraise);
+        });
         hubConnection.On<string, string>("ReceiveMessage", (user, message) =>
         {
-            var userPraise = $"{user} to mistrz";
-            var messCriticism = $"patrz tutaj jest najglupsza wiadomosc : {message}";
+            var userPraise = $"{user} napisał: {message}";
             messages.Add(userPraise);
-            messages.Add(messCriticism);
-            messages.Add("xdxdxdxdxd");
-            InvokeAsync(StateHasChanged);
         });
+                
+        
 
         await hubConnection.StartAsync();
     }
